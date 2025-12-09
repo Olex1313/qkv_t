@@ -1,0 +1,6 @@
+[submodule "contrib/LightGlue-ONNX-simiyutin"]
+	path = contrib/LightGlue-ONNX-simiyutin
+	url = git@github.com:simiyutin/LightGlue-ONNX.git
+[submodule "contrib/MNN-simiyutin"]
+	path = contrib/MNN-simiyutin
+	url = git@github.com:simiyutin/MNN.git

@@ -3,7 +3,7 @@ import torch.nn.functional as F
 from torch.nn.attention import sdpa_kernel, SDPBackend
 import time
 
-N, S, H, E = 4, 128, 12, 64
+N, S, H, E = 4, 256, 12, 64
 query = torch.rand(N, H, S, E, dtype=torch.float16, device='cuda')
 key = torch.rand(N, H, S, E, dtype=torch.float16, device='cuda')
 value = torch.rand(N, H, S, E, dtype=torch.float16, device='cuda')
@@ -30,6 +30,8 @@ backends = {
     'EFFICIENT_ATTENTION': SDPBackend.EFFICIENT_ATTENTION,
     'MATH': SDPBackend.MATH
 }
+
+print(f"batch_size: {N}, num_heads: {H}, seq_len: {S}, embed_dim: {E}")
 
 for name, backend in backends.items():
     try:

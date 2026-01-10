@@ -42,3 +42,5 @@
 
 # python env
 env/
+__pycache__/
+.pytest*

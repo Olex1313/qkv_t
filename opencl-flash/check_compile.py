@@ -2,7 +2,7 @@ import pyopencl as cl
 
 
 KERNEL_FILE = (
-    "/Users/aleksejlimonov/Documents/github/qkv_t/opencl-flash-v2/kernels/flash_attn.cl"
+    "/Users/aleksejlimonov/Documents/github/qkv_t/opencl-flash/kernels/flash_attn.cl"
 )
 TORCH_SEED = 42
 BLOCK_SIZE_M = 32
@@ -24,5 +24,6 @@ prg = cl.Program(ctx, kernel_code).build(
         f"-D BLOCK_SIZE_N={BLOCK_SIZE_N}",
     ]
 )
-print(prg)
-kernel = prg.flash_attention_v2_fwd
+kernel = prg.flash_attention_v1_fwd
+
+print("COMPILED")

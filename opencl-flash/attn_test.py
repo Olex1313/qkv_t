@@ -4,7 +4,7 @@ import numpy as np
 import pyopencl as cl
 import math
 
-KERNEL_FILE = "kernels/flash_attn.cl"
+KERNEL_FILES = ["kernels/flash_attn.cl", "kernels/flash_attn_v1.cl"]
 TORCH_SEED = 42
 BLOCK_SIZE_M = 32
 WG_SIZE = 64
@@ -20,6 +20,7 @@ def execute_opencl_kernel(
     S: int,
     D: int,
     is_causal: int,
+    ocl_kernel: str,
 ) -> np.ndarray:
     ctx = cl.create_some_context()
     queue = cl.CommandQueue(ctx)
@@ -41,7 +42,7 @@ def execute_opencl_kernel(
         int(math.ceil(g / l) * l) for g, l in zip(global_size, local_size)
     )
 
-    with open(KERNEL_FILE, "r") as f:
+    with open(ocl_kernel, "r") as f:
         kernel_code = f.read()
 
     prg = cl.Program(ctx, kernel_code).build(options=[f"-D D_HEAD={D}"])
@@ -80,8 +81,9 @@ TEST_CASES = [
 ]
 
 
+@pytest.mark.parametrize("ocl_kernel", KERNEL_FILES)
 @pytest.mark.parametrize("B, H, L, S, D, is_causal", TEST_CASES)
-def test_flash_attention_correctness(B, H, L, S, D, is_causal):
+def test_flash_attention_correctness(B, H, L, S, D, is_causal, ocl_kernel):
     torch.manual_seed(TORCH_SEED)
 
     Q_pt = torch.randn(B, H, L, D, dtype=torch.float32) * 0.1
@@ -101,7 +103,9 @@ def test_flash_attention_correctness(B, H, L, S, D, is_causal):
     K_np = K_pt.numpy().flatten()
     V_np = V_pt.numpy().flatten()
 
-    O_opencl_np = execute_opencl_kernel(Q_np, K_np, V_np, B, H, L, S, D, is_causal)
+    O_opencl_np = execute_opencl_kernel(
+        Q_np, K_np, V_np, B, H, L, S, D, is_causal, ocl_kernel
+    )
 
     RTOL = 1e-4  # Rel err
     ATOL = 1e-5  # Abs err

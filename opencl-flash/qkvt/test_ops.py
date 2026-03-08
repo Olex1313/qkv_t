@@ -115,14 +115,18 @@ def test_softmax_correctness(queue, shape):
 
 
 SDPA_CASES = [
+    # edge cases
     (1, 4, 4, 16, 64, False),
-    (2, 2, 32, 32, 32, False),
     (1, 4, 10, 100, 64, False),
-    (1, 4, 100, 10, 64, False),
+    # bert/lightglue self-attention
     (4, 8, 256, 256, 64, False),
+    (8, 12, 512, 512, 64, False),
+    # large batch
     (24, 8, 256, 256, 64, False),
+    # cross
     (12, 4, 256, 512, 64, False),
-    (12, 4, 256, 512, 64, False),
+    (12, 4, 256, 2048, 64, False),
+    (12, 4, 256, 8192, 64, False),
     # FIXME, disabled is_casual
     # (1, 16, 512, 512, 64, True),
     # (1, 4, 64, 64, 64, True),

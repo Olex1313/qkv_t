@@ -107,7 +107,7 @@ def native_sdpa(
 
 
 _FLASH_BLOCK_SIZE_M = 32
-_FLASH_WG_SIZE = 64
+_FLASH_WG_SIZE = 32
 
 
 # Q: float32[B, H, L, D], K/V: float32[B, H, S, D] -> float32[B, H, L, D]

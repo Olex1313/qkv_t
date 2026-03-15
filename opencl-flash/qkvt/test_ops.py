@@ -32,7 +32,7 @@ def timed(fn):
     return wrapper
 
 
-from .ops import bmm, softmax, native_sdpa, flash_v1_sdpa
+from .ops import bmm, softmax, native_sdpa, flash_v1_sdpa, flash_v2_sdpa
 
 RANDOM_SEED = 42
 
@@ -132,7 +132,7 @@ SDPA_CASES = [
     # (1, 4, 64, 64, 64, True),
 ]
 
-SPDA_IMPL_CASES = [native_sdpa, flash_v1_sdpa]
+SPDA_IMPL_CASES = [native_sdpa, flash_v1_sdpa, flash_v2_sdpa]
 
 
 @timed
@@ -155,5 +155,34 @@ def test_native_sdpa_correctness(queue, B, H, L, S, D, is_causal, flash_impl):
     ).numpy()
 
     out = flash_impl(queue, Q, K, V, B, H, L, S, D, is_causal=is_causal)
+
+    np.testing.assert_allclose(out, ref, rtol=1e-4, atol=1e-5)
+
+
+@timed
+@pytest.mark.parametrize("B, H, L, S, D, is_causal", SDPA_CASES)
+def test_mnn_layout_w_fav2(queue, B, H, L, S, D, is_causal):
+    rng = np.random.default_rng(RANDOM_SEED)
+    Q = rng.standard_normal((B, H, L, D)).astype(np.float32) * 0.1
+    K = rng.standard_normal((B, H, S, D)).astype(np.float32) * 0.1
+    V = rng.standard_normal((B, H, S, D)).astype(np.float32) * 0.1
+
+    scale = 1.0 / math.sqrt(D)
+    ref = torch.nn.functional.scaled_dot_product_attention(
+        torch.from_numpy(Q),
+        torch.from_numpy(K),
+        torch.from_numpy(V),
+        attn_mask=None,
+        is_causal=is_causal,
+        scale=scale,
+    ).numpy()
+
+    Q_mnn = Q.transpose(0, 2, 1, 3)
+    K_mnn = K.transpose(0, 2, 1, 3)
+    V_mnn = V.transpose(0, 2, 1, 3)
+
+    out = flash_v2_sdpa(
+        queue, Q_mnn, K_mnn, V_mnn, B, H, L, S, D, is_causal=is_causal, mnn_layout=True
+    ).transpose(0, 2, 1, 3)
 
     np.testing.assert_allclose(out, ref, rtol=1e-4, atol=1e-5)

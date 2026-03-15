@@ -161,3 +161,62 @@ def flash_v1_sdpa(
 
     cl.enqueue_copy(queue, output, O_g).wait()
     return output
+
+
+# Q: float32[B, H, L, D], K/V: float32[B, H, S, D] -> float32[B, H, L, D]
+def flash_v2_sdpa(
+    queue: cl.CommandQueue,
+    Q: np.ndarray,
+    K: np.ndarray,
+    V: np.ndarray,
+    B: int,
+    H: int,
+    L: int,
+    S: int,
+    D: int,
+    is_causal: bool = False,
+    mnn_layout: bool = False,
+) -> np.ndarray:
+    Q = np.ascontiguousarray(Q, dtype=np.float32)
+    K = np.ascontiguousarray(K, dtype=np.float32)
+    V = np.ascontiguousarray(V, dtype=np.float32)
+    output = np.empty_like(Q)
+
+    scale = np.float32(1.0 / math.sqrt(D))
+
+    ctx = queue.context
+    mf = cl.mem_flags
+    Q_g = cl.Buffer(ctx, mf.READ_ONLY | mf.COPY_HOST_PTR, hostbuf=Q)
+    K_g = cl.Buffer(ctx, mf.READ_ONLY | mf.COPY_HOST_PTR, hostbuf=K)
+    V_g = cl.Buffer(ctx, mf.READ_ONLY | mf.COPY_HOST_PTR, hostbuf=V)
+    O_g = cl.Buffer(ctx, mf.WRITE_ONLY, size=output.nbytes)
+
+    num_q_blocks = (L + _FLASH_BLOCK_SIZE_M - 1) // _FLASH_BLOCK_SIZE_M
+    global_size = (num_q_blocks * _FLASH_WG_SIZE, B, H)
+    local_size = (_FLASH_WG_SIZE, 1, 1)
+
+    if mnn_layout:
+        prg = _build(ctx, "flash_attn_v2_mnn.cl", options=[f"-D D_HEAD={D}"])
+        kernel_fn = prg.flash_attention_v2_mnn_fwd
+    else:
+        prg = _build(ctx, "flash_attn_v2.cl", options=[f"-D D_HEAD={D}"])
+        kernel_fn = prg.flash_attention_v2_fwd
+
+    kernel_fn(
+        queue,
+        global_size,
+        local_size,
+        Q_g,
+        K_g,
+        V_g,
+        O_g,
+        np.int32(B),
+        np.int32(H),
+        np.int32(L),
+        np.int32(S),
+        scale,
+        np.int32(is_causal),
+    ).wait()
+
+    cl.enqueue_copy(queue, output, O_g).wait()
+    return output

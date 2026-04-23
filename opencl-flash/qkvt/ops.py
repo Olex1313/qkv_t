@@ -4,6 +4,8 @@ from pathlib import Path
 import numpy as np
 import pyopencl as cl
 
+from qkvt.profiling import sol_tracked
+
 _KERNELS_DIR = Path(__file__).parent / "kernels"
 _BMM_TS = 16
 
@@ -15,7 +17,11 @@ def _build(ctx: cl.Context, filename: str, options: list[str] = []) -> cl.Progra
 
 # input: float32[B, M, N], other: float32[B, N, K] -> float32[B, M, K] * alpha
 def bmm(
-    queue: cl.CommandQueue, input: np.ndarray, other: np.ndarray, alpha=1.0
+    queue: cl.CommandQueue,
+    input: np.ndarray,
+    other: np.ndarray,
+    alpha=1.0,
+    _prof_events: list = None,
 ) -> np.ndarray:
     assert input.ndim == 3 and other.ndim == 3
     B, M, N = input.shape
@@ -42,7 +48,7 @@ def bmm(
     )
     local_size = (TILE_SIZE, TILE_SIZE, 1)
 
-    prg.bmm(
+    event = prg.bmm(
         queue,
         global_size,
         local_size,
@@ -53,14 +59,19 @@ def bmm(
         B_g,
         C_g,
         np.float32(alpha),
-    ).wait()
+    )
+    event.wait()
+    if _prof_events is not None:
+        _prof_events.append(event)
 
     cl.enqueue_copy(queue, output, C_g).wait()
     return output
 
 
 # input - float32[..., S] — softmax applied over last dim
-def softmax(queue: cl.CommandQueue, input: np.ndarray) -> np.ndarray:
+def softmax(
+    queue: cl.CommandQueue, input: np.ndarray, _prof_events: list = None
+) -> np.ndarray:
     input = np.ascontiguousarray(input, dtype=np.float32)
     S = input.shape[-1]
     N_rows = input.size // S
@@ -75,14 +86,23 @@ def softmax(queue: cl.CommandQueue, input: np.ndarray) -> np.ndarray:
     prg = _build(ctx, "scale_softmax.cl")
 
     WG_SIZE = 64
-    prg.scale_softmax(
+    event = prg.scale_softmax(
         queue, (N_rows * WG_SIZE,), (WG_SIZE,), I_g, O_g, np.int32(S)
-    ).wait()
+    )
+    event.wait()
+    if _prof_events is not None:
+        _prof_events.append(event)
 
     cl.enqueue_copy(queue, output, O_g).wait()
     return output.reshape(input.shape)
 
 
+@sol_tracked(
+    flop_fn=lambda queue, Q, K, V, B, H, L, S, D, **_: 4 * B * H * L * S * D,
+    # materializes QK^T: Q+K read, QK^T written+read, softmax written+read, V read, O written
+    bytes_fn=lambda queue, Q, K, V, B, H, L, S, D, **_: 4
+    * (2 * B * H * L * D + 2 * B * H * S * D + 4 * B * H * L * S),
+)
 def native_sdpa(
     queue: cl.CommandQueue,
     Q: np.ndarray,
@@ -94,8 +114,8 @@ def native_sdpa(
     S: int,
     D: int,
     is_causal: bool = False,
+    _prof_events: list = None,
 ):
-
     # [B*H, L, D] for bmm
     Q_b = Q.reshape(B * H, L, D)
     K_b = K.reshape(B * H, S, D)
@@ -111,6 +131,11 @@ _FLASH_WG_SIZE = 32
 
 
 # Q: float32[B, H, L, D], K/V: float32[B, H, S, D] -> float32[B, H, L, D]
+@sol_tracked(
+    flop_fn=lambda queue, Q, K, V, B, H, L, S, D, **_: 4 * B * H * L * S * D,
+    bytes_fn=lambda queue, Q, K, V, B, H, L, S, D, **_: 4
+    * (B * H * L * D + 2 * B * H * S * D + B * H * L * D),
+)
 def flash_v1_sdpa(
     queue: cl.CommandQueue,
     Q: np.ndarray,
@@ -122,6 +147,7 @@ def flash_v1_sdpa(
     S: int,
     D: int,
     is_causal: bool = False,
+    _prof_events: list = None,
 ) -> np.ndarray:
     Q = np.ascontiguousarray(Q, dtype=np.float32)
     K = np.ascontiguousarray(K, dtype=np.float32)
@@ -143,7 +169,7 @@ def flash_v1_sdpa(
     global_size = (num_q_blocks * _FLASH_WG_SIZE, B, H)
     local_size = (_FLASH_WG_SIZE, 1, 1)
 
-    prg.flash_attention_v1_fwd(
+    event = prg.flash_attention_v1_fwd(
         queue,
         global_size,
         local_size,
@@ -157,13 +183,21 @@ def flash_v1_sdpa(
         np.int32(S),
         scale,
         np.int32(is_causal),
-    ).wait()
+    )
+    event.wait()
+    if _prof_events is not None:
+        _prof_events.append(event)
 
     cl.enqueue_copy(queue, output, O_g).wait()
     return output
 
 
 # Q: float32[B, H, L, D], K/V: float32[B, H, S, D] -> float32[B, H, L, D]
+@sol_tracked(
+    flop_fn=lambda queue, Q, K, V, B, H, L, S, D, **_: 4 * B * H * L * S * D,
+    bytes_fn=lambda queue, Q, K, V, B, H, L, S, D, **_: 4
+    * (B * H * L * D + 2 * B * H * S * D + B * H * L * D),
+)
 def flash_v2_sdpa(
     queue: cl.CommandQueue,
     Q: np.ndarray,
@@ -176,6 +210,8 @@ def flash_v2_sdpa(
     D: int,
     is_causal: bool = False,
     mnn_layout: bool = False,
+    use_vector_load: bool = False,
+    _prof_events: list = None,
 ) -> np.ndarray:
     Q = np.ascontiguousarray(Q, dtype=np.float32)
     K = np.ascontiguousarray(K, dtype=np.float32)
@@ -196,13 +232,16 @@ def flash_v2_sdpa(
     local_size = (_FLASH_WG_SIZE, 1, 1)
 
     if mnn_layout:
-        prg = _build(ctx, "flash_attn_v2_mnn.cl", options=[f"-D D_HEAD={D}"])
+        options = [f"-D D_HEAD={D}"]
+        if use_vector_load:
+            options.append("-D USE_VECTOR_LOAD=1")
+        prg = _build(ctx, "flash_attn_v2_mnn.cl", options)
         kernel_fn = prg.flash_attention_v2_mnn_fwd
     else:
         prg = _build(ctx, "flash_attn_v2.cl", options=[f"-D D_HEAD={D}"])
         kernel_fn = prg.flash_attention_v2_fwd
 
-    kernel_fn(
+    event = kernel_fn(
         queue,
         global_size,
         local_size,
@@ -216,7 +255,10 @@ def flash_v2_sdpa(
         np.int32(S),
         scale,
         np.int32(is_causal),
-    ).wait()
+    )
+    event.wait()
+    if _prof_events is not None:
+        _prof_events.append(event)
 
     cl.enqueue_copy(queue, output, O_g).wait()
     return output

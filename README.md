@@ -13,8 +13,6 @@ cd contrib/MNN-simiyutin/build$
 ### Сконфигурить флажки MNN "правильно"
 
 ```bash
-#!/bin/sh
-
 cmake .. \
 -DMNN_BUILD_CONVERTER=ON \
 -DMNN_VULKAN=OFF \
@@ -35,5 +33,7 @@ cmake .. \
 -DMNN_BUILD_TOOLS=ON \
 -DMNN_SUPPORT_TRANSFORMER_FUSE=ON \
 -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
--DMNN_BUILD_TEST=ON
+-DMNN_BUILD_TEST=ON \
+-DLOG_VERBOSE=ON \
+-DMNN_GPU_TIME_PROFILE=ON ..
 ```

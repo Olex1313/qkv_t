@@ -1,10 +1,13 @@
 import math
+import time
 from pathlib import Path
 
 import numpy as np
 import pyopencl as cl
 
-from qkvt.profiling import sol_tracked
+from qkvt.profiling import sol_tracked, WallClockEvent
+
+USE_WALLCLOCK = True
 
 _KERNELS_DIR = Path(__file__).parent / "kernels"
 _BMM_TS = 16
@@ -48,6 +51,8 @@ def bmm(
     )
     local_size = (TILE_SIZE, TILE_SIZE, 1)
 
+    if USE_WALLCLOCK:
+        t0 = time.perf_counter()
     event = prg.bmm(
         queue,
         global_size,
@@ -61,7 +66,11 @@ def bmm(
         np.float32(alpha),
     )
     event.wait()
-    if _prof_events is not None:
+    if USE_WALLCLOCK:
+        t1 = time.perf_counter()
+        if _prof_events is not None:
+            _prof_events.append(WallClockEvent(int((t1 - t0) * 1e9)))
+    elif _prof_events is not None:
         _prof_events.append(event)
 
     cl.enqueue_copy(queue, output, C_g).wait()
@@ -86,11 +95,17 @@ def softmax(
     prg = _build(ctx, "scale_softmax.cl")
 
     WG_SIZE = 64
+    if USE_WALLCLOCK:
+        t0 = time.perf_counter()
     event = prg.scale_softmax(
         queue, (N_rows * WG_SIZE,), (WG_SIZE,), I_g, O_g, np.int32(S)
     )
     event.wait()
-    if _prof_events is not None:
+    if USE_WALLCLOCK:
+        t1 = time.perf_counter()
+        if _prof_events is not None:
+            _prof_events.append(WallClockEvent(int((t1 - t0) * 1e9)))
+    elif _prof_events is not None:
         _prof_events.append(event)
 
     cl.enqueue_copy(queue, output, O_g).wait()
@@ -181,6 +196,8 @@ def flash_v2_sdpa(
     ]
     prg = _build(ctx, "flash_attn_v2_mnn.cl", options)
 
+    if USE_WALLCLOCK:
+        t0 = time.perf_counter()
     event = prg.flash_attention_v2_mnn_fwd(
         queue,
         global_size,
@@ -197,7 +214,11 @@ def flash_v2_sdpa(
         np.int32(is_causal),
     )
     event.wait()
-    if _prof_events is not None:
+    if USE_WALLCLOCK:
+        t1 = time.perf_counter()
+        if _prof_events is not None:
+            _prof_events.append(WallClockEvent(int((t1 - t0) * 1e9)))
+    elif _prof_events is not None:
         _prof_events.append(event)
 
     cl.enqueue_copy(queue, output, O_g).wait()

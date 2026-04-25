@@ -7,6 +7,19 @@ import numpy as np
 import pyopencl as cl
 
 
+class WallClockEvent:
+    class _Prof:
+        def __init__(self, start_ns: int, end_ns: int):
+            self.start = start_ns
+            self.end = end_ns
+
+    def __init__(self, elapsed_ns: int):
+        self.profile = self._Prof(0, elapsed_ns)
+
+    def wait(self):
+        pass
+
+
 @dataclass(frozen=True)
 class ProfilingResult:
     median_ms: float

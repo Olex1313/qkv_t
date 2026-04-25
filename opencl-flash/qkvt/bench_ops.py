@@ -44,11 +44,12 @@ def queue():
 
 
 SDPA_BENCH_CASES = [
-    (1, 4, 512, 512, 64),
-    (1, 4, 1024, 1024, 64),
-    (1, 4, 2048, 2048, 64),
-    (1, 4, 4096, 4096, 64),
-    (1, 4, 8192, 8192, 64),
+    (1, 8, 512, 512, 64),
+    (1, 8, 1024, 1024, 64),
+    (1, 8, 2048, 2048, 64),
+    (1, 8, 4096, 4096, 64),
+    (1, 8, 8192, 8192, 64),
+    (1, 8, 16384, 16384, 64),
 ]
 
 
@@ -150,7 +151,8 @@ def plot_bench(
 
     for i, name in enumerate(impl_names):
         gflops = [
-            results[name][s].tflops * 1e3 if s in results[name] else 0 for s in seq_lens
+            results[name][s].tflops * 10e3 if s in results[name] else 0
+            for s in seq_lens
         ]
         pos = positions_base + (i - (n_impls - 1) / 2) * width
         color = colors[i % len(colors)]

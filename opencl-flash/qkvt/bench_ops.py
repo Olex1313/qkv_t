@@ -5,7 +5,7 @@ import numpy as np
 import pyopencl as cl
 import pytest
 
-from .ops import flash_v1_sdpa, flash_v2_sdpa, native_sdpa
+from .ops import flash_v2_sdpa, native_sdpa
 from .profiling import ProfilingResult
 
 RANDOM_SEED = 42
@@ -43,7 +43,6 @@ def queue():
     return make_profiling_queue()
 
 
-# (B, H, L, S, D) — shapes relevant to LightGlue and typical attention benchmarks
 SDPA_BENCH_CASES = [
     (2, 4, 512, 512, 64),  # short prefill
     (2, 4, 1024, 1024, 64),
@@ -52,11 +51,7 @@ SDPA_BENCH_CASES = [
 ]
 
 
-def flash_v2_sdpa_vload(*args, **kwargs):
-    return flash_v2_sdpa(*args, **kwargs, use_vector_load=True)
-
-
-BENCH_IMPLS = [native_sdpa, flash_v1_sdpa, flash_v2_sdpa, flash_v2_sdpa_vload]
+BENCH_IMPLS = [native_sdpa, flash_v2_sdpa]
 
 
 def _print_sol(result: ProfilingResult, device: cl.Device) -> None:

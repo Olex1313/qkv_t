@@ -126,70 +126,9 @@ def native_sdpa(
     return bmm(queue, applied_softmax, V_b).reshape(B, H, L, D)
 
 
-_FLASH_BLOCK_SIZE_M = 32
-_FLASH_WG_SIZE = 32
-
-
-# Q: float32[B, H, L, D], K/V: float32[B, H, S, D] -> float32[B, H, L, D]
-@sol_tracked(
-    flop_fn=lambda queue, Q, K, V, B, H, L, S, D, **_: 4 * B * H * L * S * D,
-    bytes_fn=lambda queue, Q, K, V, B, H, L, S, D, **_: 4
-    * (B * H * L * D + 2 * B * H * S * D + B * H * L * D),
-)
-def flash_v1_sdpa(
-    queue: cl.CommandQueue,
-    Q: np.ndarray,
-    K: np.ndarray,
-    V: np.ndarray,
-    B: int,
-    H: int,
-    L: int,
-    S: int,
-    D: int,
-    is_causal: bool = False,
-    _prof_events: list = None,
-) -> np.ndarray:
-    Q = np.ascontiguousarray(Q, dtype=np.float32)
-    K = np.ascontiguousarray(K, dtype=np.float32)
-    V = np.ascontiguousarray(V, dtype=np.float32)
-    output = np.empty_like(Q)
-
-    scale = np.float32(1.0 / math.sqrt(D))
-
-    ctx = queue.context
-    mf = cl.mem_flags
-    Q_g = cl.Buffer(ctx, mf.READ_ONLY | mf.COPY_HOST_PTR, hostbuf=Q)
-    K_g = cl.Buffer(ctx, mf.READ_ONLY | mf.COPY_HOST_PTR, hostbuf=K)
-    V_g = cl.Buffer(ctx, mf.READ_ONLY | mf.COPY_HOST_PTR, hostbuf=V)
-    O_g = cl.Buffer(ctx, mf.WRITE_ONLY, size=output.nbytes)
-
-    prg = _build(ctx, "flash_attn_v1.cl", options=[f"-D D_HEAD={D}"])
-
-    num_q_blocks = (L + _FLASH_BLOCK_SIZE_M - 1) // _FLASH_BLOCK_SIZE_M
-    global_size = (num_q_blocks * _FLASH_WG_SIZE, B, H)
-    local_size = (_FLASH_WG_SIZE, 1, 1)
-
-    event = prg.flash_attention_v1_fwd(
-        queue,
-        global_size,
-        local_size,
-        Q_g,
-        K_g,
-        V_g,
-        O_g,
-        np.int32(B),
-        np.int32(H),
-        np.int32(L),
-        np.int32(S),
-        scale,
-        np.int32(is_causal),
-    )
-    event.wait()
-    if _prof_events is not None:
-        _prof_events.append(event)
-
-    cl.enqueue_copy(queue, output, O_g).wait()
-    return output
+_FLASH_BLOCK_SIZE_M = 64
+_FLASH_BLOCK_SIZE_N = 16
+_FLASH_THREADS_PER_ROW = 2
 
 
 # Q: float32[B, H, L, D], K/V: float32[B, H, S, D] -> float32[B, H, L, D]
@@ -209,39 +148,40 @@ def flash_v2_sdpa(
     S: int,
     D: int,
     is_causal: bool = False,
-    mnn_layout: bool = False,
-    use_vector_load: bool = False,
+    block_m: int = _FLASH_BLOCK_SIZE_M,
+    block_n: int = _FLASH_BLOCK_SIZE_N,
+    tpr: int = _FLASH_THREADS_PER_ROW,
     _prof_events: list = None,
 ) -> np.ndarray:
-    Q = np.ascontiguousarray(Q, dtype=np.float32)
-    K = np.ascontiguousarray(K, dtype=np.float32)
-    V = np.ascontiguousarray(V, dtype=np.float32)
-    output = np.empty_like(Q)
+    # Transpose [B, H, L, D] -> [B, L, H, D] (MNN layout)
+    Q_mnn = np.ascontiguousarray(Q.transpose(0, 2, 1, 3), dtype=np.float32)
+    K_mnn = np.ascontiguousarray(K.transpose(0, 2, 1, 3), dtype=np.float32)
+    V_mnn = np.ascontiguousarray(V.transpose(0, 2, 1, 3), dtype=np.float32)
+    output = np.empty_like(Q_mnn)
 
     scale = np.float32(1.0 / math.sqrt(D))
+    wg_size = block_m * tpr
 
     ctx = queue.context
     mf = cl.mem_flags
-    Q_g = cl.Buffer(ctx, mf.READ_ONLY | mf.COPY_HOST_PTR, hostbuf=Q)
-    K_g = cl.Buffer(ctx, mf.READ_ONLY | mf.COPY_HOST_PTR, hostbuf=K)
-    V_g = cl.Buffer(ctx, mf.READ_ONLY | mf.COPY_HOST_PTR, hostbuf=V)
+    Q_g = cl.Buffer(ctx, mf.READ_ONLY | mf.COPY_HOST_PTR, hostbuf=Q_mnn)
+    K_g = cl.Buffer(ctx, mf.READ_ONLY | mf.COPY_HOST_PTR, hostbuf=K_mnn)
+    V_g = cl.Buffer(ctx, mf.READ_ONLY | mf.COPY_HOST_PTR, hostbuf=V_mnn)
     O_g = cl.Buffer(ctx, mf.WRITE_ONLY, size=output.nbytes)
 
-    num_q_blocks = (L + _FLASH_BLOCK_SIZE_M - 1) // _FLASH_BLOCK_SIZE_M
-    global_size = (num_q_blocks * _FLASH_WG_SIZE, B, H)
-    local_size = (_FLASH_WG_SIZE, 1, 1)
+    num_q_blocks = (L + block_m - 1) // block_m
+    global_size = (num_q_blocks * wg_size, B, H)
+    local_size = (wg_size, 1, 1)
 
-    if mnn_layout:
-        options = [f"-D D_HEAD={D}"]
-        if use_vector_load:
-            options.append("-D USE_VECTOR_LOAD=1")
-        prg = _build(ctx, "flash_attn_v2_mnn.cl", options)
-        kernel_fn = prg.flash_attention_v2_mnn_fwd
-    else:
-        prg = _build(ctx, "flash_attn_v2.cl", options=[f"-D D_HEAD={D}"])
-        kernel_fn = prg.flash_attention_v2_fwd
+    options = [
+        f"-D D_HEAD={D}",
+        f"-D BLOCK_SIZE_M={block_m}",
+        f"-D BLOCK_SIZE_N={block_n}",
+        f"-D THREADS_PER_ROW={tpr}",
+    ]
+    prg = _build(ctx, "flash_attn_v2_mnn.cl", options)
 
-    event = kernel_fn(
+    event = prg.flash_attention_v2_mnn_fwd(
         queue,
         global_size,
         local_size,
@@ -261,4 +201,5 @@ def flash_v2_sdpa(
         _prof_events.append(event)
 
     cl.enqueue_copy(queue, output, O_g).wait()
-    return output
+    # Transpose back [B, L, H, D] -> [B, H, L, D]
+    return output.transpose(0, 2, 1, 3)

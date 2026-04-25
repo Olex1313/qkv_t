@@ -44,10 +44,11 @@ def queue():
 
 
 SDPA_BENCH_CASES = [
-    (2, 4, 512, 512, 64),  # short prefill
-    (2, 4, 1024, 1024, 64),
-    (2, 4, 2048, 2048, 64),
-    (2, 4, 3840, 3840, 64),  # LightGlue full sequence
+    (1, 4, 512, 512, 64),
+    (1, 4, 1024, 1024, 64),
+    (1, 4, 2048, 2048, 64),
+    (1, 4, 4096, 4096, 64),
+    (1, 4, 8192, 8192, 64),
 ]
 
 
@@ -77,3 +78,106 @@ def test_sdpa_sol(queue, B, H, L, S, D, impl):
         f"\n{impl.__name__}  B={B} H={H} L={L} S={S} D={D}  device: {queue.device.name.strip()}"
     )
     _print_sol(result, queue.device)
+
+
+def _flops(B, H, L, S, D):
+    """Total FLOPs for SDPA: 2 matmuls of 4*B*H*L*S*D."""
+    return 4 * B * H * L * S * D
+
+
+def run_bench_sweep(
+    warmup: int = 3,
+    iters: int = 15,
+    cases: list[tuple[int, int, int, int, int]] | None = None,
+    impls: list | None = None,
+) -> dict[str, dict[int, ProfilingResult]]:
+    """Run all combos using profiling events, return {impl_name: {seq_len: ProfilingResult}}."""
+    queue = make_profiling_queue()
+    if cases is None:
+        cases = SDPA_BENCH_CASES
+    if impls is None:
+        impls = BENCH_IMPLS
+
+    results: dict[str, dict[int, ProfilingResult]] = {}
+    for impl in impls:
+        name = impl.__name__
+        results[name] = {}
+        for B, H, L, S, D in cases:
+            rng = np.random.default_rng(RANDOM_SEED)
+            Q = rng.standard_normal((B, H, L, D)).astype(np.float32)
+            K = rng.standard_normal((B, H, S, D)).astype(np.float32)
+            V = rng.standard_normal((B, H, S, D)).astype(np.float32)
+
+            _, result = impl(
+                queue,
+                Q,
+                K,
+                V,
+                B,
+                H,
+                L,
+                S,
+                D,
+                benchmark=True,
+                warmup=warmup,
+                iters=iters,
+            )
+            results[name][S] = result
+            print(f"{name}  S={S}  {result}")
+
+    return results
+
+
+def plot_bench(
+    results: dict[str, dict[int, ProfilingResult]],
+    svg_path: str = "bench_sdpa.svg",
+    device_name: str | None = None,
+):
+    import matplotlib
+
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    seq_lens = sorted({s for r in results.values() for s in r})
+    impl_names = list(results.keys())
+    n_impls = len(impl_names)
+    colors = plt.rcParams["axes.prop_cycle"].by_key()["color"]
+
+    fig, ax = plt.subplots(figsize=(8, 5))
+
+    positions_base = np.arange(len(seq_lens))
+    width = 0.7 / n_impls
+
+    for i, name in enumerate(impl_names):
+        gflops = [
+            results[name][s].tflops * 1e3 if s in results[name] else 0 for s in seq_lens
+        ]
+        pos = positions_base + (i - (n_impls - 1) / 2) * width
+        color = colors[i % len(colors)]
+
+        ax.bar(pos, gflops, width=width * 0.85, color=color, alpha=0.75, label=name)
+
+    ax.set_xticks(positions_base)
+    ax.set_xticklabels([str(s) for s in seq_lens])
+    ax.set_xlabel("Sequence length (L = S)")
+    ax.set_ylabel("GFLOPS")
+    ax.set_title(
+        f"SDPA throughput: flash_v2 vs native (D=64)"
+        + (f" — {device_name}" if device_name else "")
+    )
+    ax.legend()
+    ax.grid(True, alpha=0.3, axis="y")
+
+    fig.tight_layout()
+    fig.savefig(svg_path, format="svg", bbox_inches="tight")
+    print(f"Saved {svg_path}")
+    plt.close(fig)
+
+
+if __name__ == "__main__":
+    queue = make_profiling_queue()
+    device_name = queue.device.name.strip()
+    del queue
+
+    results = run_bench_sweep()
+    plot_bench(results, device_name=device_name)

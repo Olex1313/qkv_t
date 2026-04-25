@@ -32,7 +32,7 @@ def timed(fn):
     return wrapper
 
 
-from .ops import bmm, softmax, native_sdpa, flash_v1_sdpa, flash_v2_sdpa
+from .ops import bmm, softmax, native_sdpa, flash_v2_sdpa
 
 RANDOM_SEED = 42
 

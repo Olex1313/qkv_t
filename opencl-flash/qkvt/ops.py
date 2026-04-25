@@ -121,9 +121,9 @@ def native_sdpa(
     K_b = K.reshape(B * H, S, D)
     V_b = V.reshape(B * H, S, D)
 
-    scores = bmm(queue, Q_b, K_b.swapaxes(-1, -2), 1.0 / math.sqrt(D))
-    applied_softmax = softmax(queue, scores)
-    return bmm(queue, applied_softmax, V_b).reshape(B, H, L, D)
+    scores = bmm(queue, Q_b, K_b.swapaxes(-1, -2), 1.0 / math.sqrt(D), _prof_events=_prof_events)
+    applied_softmax = softmax(queue, scores, _prof_events=_prof_events)
+    return bmm(queue, applied_softmax, V_b, _prof_events=_prof_events).reshape(B, H, L, D)
 
 
 _FLASH_BLOCK_SIZE_M = 64

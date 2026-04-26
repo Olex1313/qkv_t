@@ -32,7 +32,7 @@ def timed(fn):
     return wrapper
 
 
-from .ops import bmm, softmax, native_sdpa, flash_v2_sdpa
+from .ops import bmm, softmax, native_sdpa, flash_v2_sdpa, device_has_subgroups
 
 RANDOM_SEED = 42
 
@@ -179,5 +179,32 @@ def test_mnn_layout_w_fav2(queue, B, H, L, S, D, is_causal):
     ).numpy()
 
     out = flash_v2_sdpa(queue, Q, K, V, B, H, L, S, D, is_causal=is_causal)
+
+    np.testing.assert_allclose(out, ref, rtol=1e-4, atol=1e-5)
+
+
+@timed
+@pytest.mark.parametrize("B, H, L, S, D, is_causal", SDPA_CASES)
+def test_fav2_subgroup(queue, B, H, L, S, D, is_causal):
+    device = queue.context.devices[0]
+    if not device_has_subgroups(device):
+        pytest.skip("cl_khr_subgroups not supported")
+
+    rng = np.random.default_rng(RANDOM_SEED)
+    Q = rng.standard_normal((B, H, L, D)).astype(np.float32) * 0.1
+    K = rng.standard_normal((B, H, S, D)).astype(np.float32) * 0.1
+    V = rng.standard_normal((B, H, S, D)).astype(np.float32) * 0.1
+
+    scale = 1.0 / math.sqrt(D)
+    ref = torch.nn.functional.scaled_dot_product_attention(
+        torch.from_numpy(Q),
+        torch.from_numpy(K),
+        torch.from_numpy(V),
+        attn_mask=None,
+        is_causal=is_causal,
+        scale=scale,
+    ).numpy()
+
+    out = flash_v2_sdpa(queue, Q, K, V, B, H, L, S, D, is_causal=is_causal, use_subgroups=True)
 
     np.testing.assert_allclose(out, ref, rtol=1e-4, atol=1e-5)

@@ -10,6 +10,10 @@ from qkvt.profiling import sol_tracked, WallClockEvent
 USE_WALLCLOCK = True
 
 _KERNELS_DIR = Path(__file__).parent / "kernels"
+
+
+def device_has_subgroups(device: cl.Device) -> bool:
+    return "cl_khr_subgroups" in device.extensions
 _BMM_TS = 16
 
 
@@ -166,6 +170,7 @@ def flash_v2_sdpa(
     block_m: int = _FLASH_BLOCK_SIZE_M,
     block_n: int = _FLASH_BLOCK_SIZE_N,
     tpr: int = _FLASH_THREADS_PER_ROW,
+    use_subgroups: bool = False,
     _prof_events: list = None,
 ) -> np.ndarray:
     # Transpose [B, H, L, D] -> [B, L, H, D] (MNN layout)
@@ -194,7 +199,8 @@ def flash_v2_sdpa(
         f"-D BLOCK_SIZE_N={block_n}",
         f"-D THREADS_PER_ROW={tpr}",
     ]
-    prg = _build(ctx, "flash_attn_v2_mnn.cl", options)
+    kernel_file = "flash_attn_v2_subgroup.cl" if use_subgroups else "flash_attn_v2_mnn.cl"
+    prg = _build(ctx, kernel_file, options)
 
     if USE_WALLCLOCK:
         t0 = time.perf_counter()
@@ -224,3 +230,5 @@ def flash_v2_sdpa(
     cl.enqueue_copy(queue, output, O_g).wait()
     # Transpose back [B, L, H, D] -> [B, H, L, D]
     return output.transpose(0, 2, 1, 3)
+
+

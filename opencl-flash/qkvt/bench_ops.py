@@ -5,7 +5,9 @@ import numpy as np
 import pyopencl as cl
 import pytest
 
-from .ops import flash_v2_sdpa, native_sdpa
+from functools import partial
+
+from .ops import flash_v2_sdpa, native_sdpa, device_has_subgroups
 from .profiling import ProfilingResult
 
 RANDOM_SEED = 42
@@ -53,6 +55,9 @@ SDPA_BENCH_CASES = [
 ]
 
 
+flash_v2_subgroup_sdpa = partial(flash_v2_sdpa, use_subgroups=True)
+flash_v2_subgroup_sdpa.__name__ = "flash_v2_subgroup_sdpa"
+
 BENCH_IMPLS = [native_sdpa, flash_v2_sdpa]
 
 
@@ -97,7 +102,9 @@ def run_bench_sweep(
     if cases is None:
         cases = SDPA_BENCH_CASES
     if impls is None:
-        impls = BENCH_IMPLS
+        impls = list(BENCH_IMPLS)
+        if device_has_subgroups(queue.device):
+            impls.append(flash_v2_subgroup_sdpa)
 
     results: dict[str, dict[int, ProfilingResult]] = {}
     for impl in impls:

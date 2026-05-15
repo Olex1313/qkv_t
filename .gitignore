@@ -44,3 +44,4 @@
 env/
 __pycache__/
 .pytest*
+bench_kernels/build*

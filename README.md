@@ -36,3 +36,8 @@ cmake .. \
 -DLOG_VERBOSE=ON \
 -DMNN_GPU_TIME_PROFILE=ON ..
 ```
+
+### Перегенерить шейдеры для mnn-vulkan
+```
+cd contrib/MNN-simiyutin/source/backend/vulkan/buffer/compiler && python3 makeshader.py
+```

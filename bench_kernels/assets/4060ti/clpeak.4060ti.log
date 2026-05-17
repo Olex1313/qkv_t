@@ -1,0 +1,397 @@
+
+=== OpenCL backend ===
+
+Platform: NVIDIA CUDA
+  Device: NVIDIA GeForce RTX 4060 Ti
+    Driver version  : 595.58.03 (Linux x64)
+    Compute units   : 34
+    Clock frequency : 2535 MHz
+
+    Single-precision compute (GFLOPS)
+      float   : 22437.99
+      float2  : 23150.86
+      float4  : 23064.51
+      float8  : 22893.97
+      float16 : 22771.24
+
+    No half precision support! Skipped
+
+    Double-precision compute (GFLOPS)
+      double  : 376.76
+      double2 : 376.31
+      double4 : 375.06
+      double8 : 373.65
+      double16: 370.02
+
+    Mixed-precision compute fp16xfp16+fp32 (GFLOPS)
+      No half precision support! Skipped
+
+    Integer compute (GOPS)
+      int     : 11887.85
+      int2    : 11906.06
+      int4    : 11880.54
+      int8    : 11882.13
+      int16   : 11832.01
+
+    Integer compute Fast 24bit (GOPS)
+      int     : 11857.94
+      int2    : 11852.14
+      int4    : 11850.86
+      int8    : 11788.10
+      int16   : 11675.97
+
+    Integer char (8bit) compute (GOPS)
+      char    : 10266.71
+      char2   : 10112.69
+      char4   : 9995.64
+      char8   : 8522.91
+      char16  : 8014.94
+
+    Integer short (16bit) compute (GOPS)
+      short   : 10111.65
+      short2  : 10088.25
+      short4  : 9931.12
+      short8  : 8539.25
+      short16 : 7806.41
+
+    INT8 dot-product compute (GOPS)
+      cl_khr_integer_dot_product not supported! Skipped
+
+    Packed INT4 compute (emulated) (GOPS)
+      int4_packed: 4324.19
+      int4_packed2: 4362.78
+      int4_packed4: 4396.33
+      int4_packed8: 4401.23
+      int4_packed16: 4338.43
+
+    Atomic throughput (GOPS)
+      int_global : 169.20
+      int_local  : 1486.32
+
+    Global memory bandwidth (GBPS)
+      float   : 252.06
+      float2  : 259.75
+      float4  : 263.90
+      float8  : 267.30
+      float16 : 269.69
+
+    Local memory bandwidth (GBPS)
+      float   : 5077.02
+      float2  : 9063.20
+      float4  : 10072.64
+      float8  : 5680.56
+
+    Image memory bandwidth (GBPS)
+      float4  : 162.37
+
+    Transfer bandwidth (GBPS)
+      enqueueWriteBuffer              : 6.41
+      enqueueReadBuffer               : 6.29
+      enqueueWriteBuffer non-blocking : 6.34
+      enqueueReadBuffer non-blocking  : 6.44
+      enqueueMapBuffer(for read)      : 6.61
+        memcpy from mapped ptr        : 3.34
+      enqueueUnmap(after write)       : 6.50
+        memcpy to mapped ptr          : 13.88
+
+    Kernel launch latency (us)
+      dispatch  : 6.29
+      roundtrip : 13.90
+
+
+=== Vulkan backend ===
+
+Vulkan Device: NVIDIA GeForce RTX 4060 Ti
+  API version   : 1.4.329
+  Driver version: 595.232.192
+  VRAM          : 16380 MB
+  Compute units : 34
+
+  Single-precision compute (GFLOPS)
+    float : 23502.21
+    float2 : 23360.21
+    float4 : 23163.43
+
+  Half-precision compute fp16xfp16+fp16 (GFLOPS)
+    half : 11946.02
+    half2 : 23754.96
+    half4 : 23395.81
+
+  Double-precision compute (GFLOPS)
+    double : 375.40
+    double2 : 368.38
+    double4 : 358.37
+
+  Mixed-precision compute fp16xfp16+fp32 (GFLOPS)
+    mp : 23328.96
+    mp2 : 23404.01
+    mp4 : 22634.97
+
+  BF16 compute bf16xbf16+fp32 (GFLOPS)
+    bf16 : 20917.43
+    bf16_2 : 20376.25
+    bf16_4 : 18831.39
+
+  Cooperative-matrix fp32xfp32+fp32 16x16x16 (TFLOPS)
+    No 16x16x16 fp32xfp32+fp32 coopmat property! Skipped
+
+  Cooperative-matrix fp16xfp16+fp32 16x16x16 (TFLOPS)
+    coopmat_fp16 : 48.27
+
+  Cooperative-matrix bf16xbf16+fp32 16x16x16 (TFLOPS)
+    coopmat_bf16 : 48.22
+
+  Cooperative-matrix fp8(E4M3)xfp8(E4M3)+fp32 16x16x16 (TFLOPS)
+    No fp8-E4M3 coopmat support (VK_EXT_shader_float8 or property)! Skipped
+
+  Cooperative-matrix fp8(E5M2)xfp8(E5M2)+fp32 16x16x16 (TFLOPS)
+    No fp8-E5M2 coopmat support (VK_EXT_shader_float8 or property)! Skipped
+
+  Atomic throughput (GFLOPS)
+    float_global : 196.24
+
+  Integer compute int32 (GOPS)
+    int : 8023.84
+    int2 : 8054.86
+    int4 : 8292.04
+
+  INT8 dot-product compute (GOPS)
+    int8_dp : 8559.81
+    int8_dp2 : 8867.64
+    int8_dp4 : 8995.67
+
+  Packed INT4 compute (emulated) (GOPS)
+    int4_packed : 9693.39
+
+  Cooperative-matrix int8xint8+int32 16x16x32 (TOPS)
+    coopmat_int8 : 190.88
+
+  Atomic throughput (GOPS)
+    int_global   : 211.97
+    ulong_global : 108.04
+    int_local    : 1492.88
+
+  Global memory bandwidth (GBPS)
+    float   : 254.88
+    float2  : 266.34
+    float4  : 271.25
+
+  Local memory bandwidth (GBPS)
+    float  : 4523.75
+    float2 : 8223.93
+    float4 : 9426.24
+
+  Image memory bandwidth (GBPS)
+    float4 : 2415.68
+
+  Transfer bandwidth (GBPS)
+    Host->Dev : 6.50
+    Dev->Host : 6.61
+
+  Kernel launch latency (us)
+    dispatch  : 6.90
+    roundtrip : 43.43
+
+
+Vulkan Device: llvmpipe (LLVM 21.1.8, 256 bits)
+  API version   : 1.4.335
+  Driver version: 26.0.3
+  VRAM          : 30985 MB
+
+  Single-precision compute (GFLOPS)
+    float : 133.63
+    float2 : 202.84
+    float4 : 262.42
+
+  Half-precision compute fp16xfp16+fp16 (GFLOPS)
+    half : 28.45
+    half2 : 49.79
+    half4 : 78.98
+
+  Double-precision compute (GFLOPS)
+    double : 64.45
+    double2 : 95.98
+    double4 : 102.82
+
+  Mixed-precision compute fp16xfp16+fp32 (GFLOPS)
+    mp : 124.20
+    mp2 : 207.84
+    mp4 : 270.56
+
+  BF16 compute bf16xbf16+fp32 (GFLOPS)
+    VK_KHR_shader_bfloat16 / shaderBFloat16Type not supported! Skipped
+
+  Cooperative-matrix fp32xfp32+fp32 16x16x16 (TFLOPS)
+    No 16x16x16 fp32xfp32+fp32 coopmat property! Skipped
+
+  Cooperative-matrix fp16xfp16+fp32 16x16x16 (TFLOPS)
+    No 16x16x16 fp16xfp16+fp32 coopmat property! Skipped
+
+  Cooperative-matrix bf16xbf16+fp32 16x16x16 (TFLOPS)
+    No 16x16x16 bf16xbf16+fp32 coopmat property! Skipped
+
+  Cooperative-matrix fp8(E4M3)xfp8(E4M3)+fp32 16x16x16 (TFLOPS)
+    No fp8-E4M3 coopmat support (VK_EXT_shader_float8 or property)! Skipped
+
+  Cooperative-matrix fp8(E5M2)xfp8(E5M2)+fp32 16x16x16 (TFLOPS)
+    No fp8-E5M2 coopmat support (VK_EXT_shader_float8 or property)! Skipped
+
+  Atomic throughput (GFLOPS)
+    float_global : 3.21
+
+  Integer compute int32 (GOPS)
+    int : 171.59
+    int2 : 271.91
+    int4 : 403.96
+
+  INT8 dot-product compute (GOPS)
+    int8_dp : 138.36
+    int8_dp2 : 196.38
+    int8_dp4 : 199.29
+
+  Packed INT4 compute (emulated) (GOPS)
+    int4_packed : 278.63
+
+  Cooperative-matrix int8xint8+int32 16x16x16 (TOPS)
+    No 16x16x{16,32} int8xint8+int32 coopmat property! Skipped
+
+  Atomic throughput (GOPS)
+    int_global   : 5.29
+    ulong_global : 5.63
+    int_local    : 5.36
+
+  Global memory bandwidth (GBPS)
+    float   : 29.49
+    float2  : 34.56
+    float4  : 32.61
+
+  Local memory bandwidth (GBPS)
+    float  : 13.20
+    float2 : 21.03
+    float4 : 31.59
+
+  Image memory bandwidth (GBPS)
+    float4 : 22.48
+
+  Transfer bandwidth (GBPS)
+    Host->Dev : 14.36
+    Dev->Host : 14.34
+
+  Kernel launch latency (us)
+    dispatch  : 5.94
+    roundtrip : 75.08
+
+
+=== CUDA backend ===
+
+CUDA Device: NVIDIA GeForce RTX 4060 Ti
+  Arch          : sm_89
+  Driver        : 13.2
+  NVRTC         : 13.1
+  SMs           : 34
+  VRAM          : 15947 MB
+
+  Single-precision compute (GFLOPS)
+    float : 19387.68
+
+  Half-precision compute (GFLOPS)
+    half : 23637.03
+    half2 : 23631.87
+
+  Double-precision compute (GFLOPS)
+    double : 377.10
+
+  Mixed-precision compute fp16xfp16+fp32 (GFLOPS)
+    mp : 17371.29
+
+  BF16 compute bf16xbf16+fp32 (GFLOPS)
+    bf16 : 22691.64
+
+  WMMA fp16xfp16+fp32 16x16x16 (TFLOPS)
+    wmma_fp16 : 382.66
+
+  WMMA bf16xbf16+fp32 16x16x16 (TFLOPS)
+    wmma_bf16 : 185.75
+
+  WMMA tf32xtf32+fp32 16x16x8 (TFLOPS)
+    wmma_tf32 : 93.16
+
+  WMMA fp64xfp64+fp64 8x8x4 (TFLOPS)
+    wmma_fp64 : 1.32
+
+  FP8(E4M3) mma.sync m16n8k32+fp32 (TFLOPS)
+    fp8_e4m3 : 95.97
+
+  FP8(E5M2) mma.sync m16n8k32+fp32 (TFLOPS)
+    fp8_e5m2 : 95.98
+
+  FP4(E2M1) mma.sync m16n8k32+fp32 (TFLOPS)
+    FP4 mma.sync requires Blackwell sm_120a or newer! Skipped
+
+  MXFP4(E2M1) mma.sync m16n8k64+fp32 (TFLOPS)
+    MXFP4 mma.sync requires Blackwell sm_120a or newer! Skipped
+
+  cuBLASLt GEMM peak (TFLOPS)
+    fp32 : 16.71
+    fp64 : 0.33
+    tf32 : 23.77
+    fp16 : 75.19
+    bf16 : 47.48
+    fp8_e4m3 : 94.78
+    fp8_e5m2 : 94.79
+
+  Integer compute (32-bit IMAD) (GOPS)
+    int : 11895.96
+
+  INT8 dot-product compute (__dp4a) (GOPS)
+    int8_dp : 33816.45
+    int8_dp2 : 34009.80
+    int8_dp4 : 36292.21
+    int8_dp8 : 36038.45
+
+  Packed INT4 compute (emulated) (GOPS)
+    int4_packed : 7596.88
+
+  WMMA int8xint8+int32 16x16x16 (TOPS)
+    wmma_int8 : 1510.78
+
+  INT8 mma.sync m16n8k32+int32 (TOPS)
+    int8_k32 : 186.08
+
+  INT8 mma.sp 2:4 sparsity m16n8k32+int32 (TOPS)
+    int8_sparse : 306.85
+
+  INT4 mma.sync m8n8k32+int32 (TOPS)
+    int4 : 353.13
+
+  BMMA b1 mma.sync m8n8k128+int32 xor.popc (TOPS)
+    bmma_b1 : 1403.94
+
+  cuBLASLt GEMM peak (TOPS)
+    int8 : 176.41
+
+  Atomic throughput (GOPS)
+    int_global : 197.92
+    int_local  : 1479.17
+
+  Global memory bandwidth (GBPS)
+    float   : 250.63
+    float2  : 258.35
+    float4  : 262.85
+
+  Local memory bandwidth (GBPS)
+    float  : 4676.49
+    float2 : 8472.91
+    float4 : 9912.38
+
+  Image memory bandwidth (GBPS)
+    float4 : 2870.37
+
+  Transfer bandwidth (GBPS)
+    Host->Dev (pinned) : 6.51
+    Dev->Host (pinned) : 6.61
+
+  Kernel launch latency (us)
+    dispatch  : not measurable via CUDA driver API
+    roundtrip : 4.83
+

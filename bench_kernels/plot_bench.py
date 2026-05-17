@@ -33,6 +33,36 @@ def parse_log(path: Path) -> list[dict]:
     return records
 
 
+def gen_table(data: dict, out_dir: Path):
+    """Write one markdown file with a table per (B,H,D) combination."""
+    lines = ["# Flash Attention Benchmark Results\n"]
+    for (B, H, D), series in sorted(data.items()):
+        avg_series = {
+            tag: {L: sum(v)/len(v) for L, v in seqs.items()}
+            for tag, seqs in series.items()
+        }
+        seq_lens = sorted({L for v in avg_series.values() for L in v})
+        tags = sorted(avg_series.keys())
+
+        lines.append(f"## B={B}  H={H}  D={D}\n")
+        header = "| Backend | " + " | ".join(f"L={L}" for L in seq_lens) + " |"
+        sep    = "| --- | " + " | ".join("---" for _ in seq_lens) + " |"
+        lines += [header, sep]
+        for tag in tags:
+            row = f"| {tag} | "
+            row += " | ".join(
+                f"{avg_series[tag][L]:.0f}" if L in avg_series[tag] else "—"
+                for L in seq_lens
+            )
+            row += " |"
+            lines.append(row)
+        lines.append("")
+
+    md_path = out_dir / "bench_results.md"
+    md_path.write_text("\n".join(lines))
+    print(f"Saved {md_path}")
+
+
 def plot_all(log_paths: list[Path], out_dir: Path = Path(".")):
     import matplotlib
     matplotlib.use("Agg")
@@ -52,6 +82,10 @@ def plot_all(log_paths: list[Path], out_dir: Path = Path(".")):
 
     colors = plt.rcParams["axes.prop_cycle"].by_key()["color"]
 
+    # Assign colors globally by tag so the same tag has the same color in every chart
+    all_tags = sorted({tag for series in data.values() for tag in series})
+    tag_color = {tag: colors[i % len(colors)] for i, tag in enumerate(all_tags)}
+
     for (B, H, D), series in sorted(data.items()):
         avg = {
             tag: {L: sum(v)/len(v) for L, v in seqs.items()}
@@ -68,7 +102,7 @@ def plot_all(log_paths: list[Path], out_dir: Path = Path(".")):
             gflops = [avg[name].get(L, 0) for L in seq_lens]
             pos = positions + (i - (len(names) - 1) / 2) * width
             ax.bar(pos, gflops, width=width * 0.85,
-                   color=colors[i % len(colors)], alpha=0.75, label=name)
+                   color=tag_color[name], alpha=0.75, label=name)
 
         ax.set_xticks(positions)
         ax.set_xticklabels([str(L) for L in seq_lens], rotation=30, ha="right")
@@ -83,6 +117,8 @@ def plot_all(log_paths: list[Path], out_dir: Path = Path(".")):
         fig.savefig(svg_path, format="png", dpi=150, bbox_inches="tight")
         print(f"Saved {svg_path}")
         plt.close(fig)
+
+    gen_table(data, out_dir)
 
 
 if __name__ == "__main__":

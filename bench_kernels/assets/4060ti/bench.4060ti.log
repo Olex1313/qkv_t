@@ -1,0 +1,413 @@
+
+=== OCL flash-attn ===
+[OCL] NVIDIA GeForce RTX 4060 Ti
+ocl-flash             B=1 H= 4 L= 1024 D= 64  min=    3946  avg=    3953  max=    3983 us  GFLOPS=272.12
+  wg=64  local=[128,1,1]  global=[2048,1,4]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=4 H= 4 L= 1024 D= 64  min=   14046  avg=   14323  max=   15462 us  GFLOPS=305.78
+  wg=256  local=[128,1,1]  global=[2048,4,4]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=1 H= 8 L= 1024 D= 64  min=    7078  avg=    7314  max=    7764 us  GFLOPS=303.38
+  wg=128  local=[128,1,1]  global=[2048,1,8]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=4 H= 8 L= 1024 D= 64  min=   28002  avg=   28340  max=   29467 us  GFLOPS=306.76
+  wg=512  local=[128,1,1]  global=[2048,4,8]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=1 H=16 L= 1024 D= 64  min=   14433  avg=   14606  max=   15168 us  GFLOPS=297.58
+  wg=256  local=[128,1,1]  global=[2048,1,16]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=4 H=16 L= 1024 D= 64  min=   54463  avg=   54887  max=   56357 us  GFLOPS=315.44
+  wg=1024  local=[128,1,1]  global=[2048,4,16]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=1 H= 4 L= 1024 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+ocl-flash             B=4 H= 4 L= 1024 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+ocl-flash             B=1 H= 8 L= 1024 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+ocl-flash             B=4 H= 8 L= 1024 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+ocl-flash             B=1 H=16 L= 1024 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+ocl-flash             B=4 H=16 L= 1024 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+ocl-flash             B=1 H= 4 L= 2048 D= 64  min=   14199  avg=   14205  max=   14211 us  GFLOPS=302.48
+  wg=128  local=[128,1,1]  global=[4096,1,4]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=4 H= 4 L= 2048 D= 64  min=   56224  avg=   56268  max=   56669 us  GFLOPS=305.56
+  wg=512  local=[128,1,1]  global=[4096,4,4]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=1 H= 8 L= 2048 D= 64  min=   28207  avg=   28213  max=   28220 us  GFLOPS=304.54
+  wg=256  local=[128,1,1]  global=[4096,1,8]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=4 H= 8 L= 2048 D= 64  min=  108765  avg=  108819  max=  109241 us  GFLOPS=315.91
+  wg=1024  local=[128,1,1]  global=[4096,4,8]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=1 H=16 L= 2048 D= 64  min=   56220  avg=   56257  max=   56674 us  GFLOPS=305.58
+  wg=512  local=[128,1,1]  global=[4096,1,16]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=4 H=16 L= 2048 D= 64  min=  213876  avg=  214161  max=  217233 us  GFLOPS=321.31
+  wg=2048  local=[128,1,1]  global=[4096,4,16]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=1 H= 4 L= 2048 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+ocl-flash             B=4 H= 4 L= 2048 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+ocl-flash             B=1 H= 8 L= 2048 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+ocl-flash             B=4 H= 8 L= 2048 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+ocl-flash             B=1 H=16 L= 2048 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+ocl-flash             B=4 H=16 L= 2048 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+ocl-flash             B=1 H= 4 L= 4096 D= 64  min=   56357  avg=   56380  max=   56502 us  GFLOPS=304.84
+  wg=256  local=[128,1,1]  global=[8192,1,4]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=4 H= 4 L= 4096 D= 64  min=  217441  avg=  217516  max=  217949 us  GFLOPS=316.04
+  wg=1024  local=[128,1,1]  global=[8192,4,4]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=1 H= 8 L= 4096 D= 64  min=  112369  avg=  112411  max=  112772 us  GFLOPS=305.78
+  wg=512  local=[128,1,1]  global=[8192,1,8]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=4 H= 8 L= 4096 D= 64  min=  427530  avg=  427644  max=  428000 us  GFLOPS=321.47
+  wg=2048  local=[128,1,1]  global=[8192,4,8]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=1 H=16 L= 4096 D= 64  min=  217440  avg=  217703  max=  219336 us  GFLOPS=316.04
+  wg=1024  local=[128,1,1]  global=[8192,1,16]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=4 H=16 L= 4096 D= 64  min=  847847  avg=  848250  max=  850411 us  GFLOPS=324.21
+  wg=4096  local=[128,1,1]  global=[8192,4,16]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=1 H= 4 L= 4096 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+ocl-flash             B=4 H= 4 L= 4096 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+ocl-flash             B=1 H= 8 L= 4096 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+ocl-flash             B=4 H= 8 L= 4096 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+ocl-flash             B=1 H=16 L= 4096 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+ocl-flash             B=4 H=16 L= 4096 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+ocl-flash             B=1 H= 4 L= 8192 D= 64  min=  224696  avg=  224778  max=  225171 us  GFLOPS=305.83
+  wg=512  local=[128,1,1]  global=[16384,1,4]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=4 H= 4 L= 8192 D= 64  min=  854924  avg=  855156  max=  855499 us  GFLOPS=321.52
+  wg=2048  local=[128,1,1]  global=[16384,4,4]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=1 H= 8 L= 8192 D= 64  min=  434753  avg=  434918  max=  435408 us  GFLOPS=316.13
+  wg=1024  local=[128,1,1]  global=[16384,1,8]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=4 H= 8 L= 8192 D= 64  min= 1704393  avg= 1704792  max= 1704921 us  GFLOPS=322.55
+  wg=4096  local=[128,1,1]  global=[16384,4,8]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=1 H=16 L= 8192 D= 64  min=  859592  avg=  859810  max=  860075 us  GFLOPS=319.78
+  wg=2048  local=[128,1,1]  global=[16384,1,16]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=4 H=16 L= 8192 D= 64  min= 3378854  avg= 3379524  max= 3382076 us  GFLOPS=325.41
+  wg=8192  local=[128,1,1]  global=[16384,4,16]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=1 H= 4 L= 8192 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+ocl-flash             B=4 H= 4 L= 8192 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+ocl-flash             B=1 H= 8 L= 8192 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+ocl-flash             B=4 H= 8 L= 8192 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+ocl-flash             B=1 H=16 L= 8192 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+ocl-flash             B=4 H=16 L= 8192 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+ocl-flash             B=1 H= 4 L=16384 D= 64  min=  868972  avg=  869676  max=  870022 us  GFLOPS=316.33
+  wg=1024  local=[128,1,1]  global=[32768,1,4]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=4 H= 4 L=16384 D= 64  min= 3390815  avg= 3395809  max= 3411256 us  GFLOPS=324.26
+  wg=4096  local=[128,1,1]  global=[32768,4,4]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=1 H= 8 L=16384 D= 64  min= 1718812  avg= 1719236  max= 1719428 us  GFLOPS=319.85
+  wg=2048  local=[128,1,1]  global=[32768,1,8]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=4 H= 8 L=16384 D= 64  min= 6756056  avg= 6760410  max= 6787432 us  GFLOPS=325.49
+  wg=8192  local=[128,1,1]  global=[32768,4,8]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=1 H=16 L=16384 D= 64  min= 3408547  avg= 3408813  max= 3410555 us  GFLOPS=322.57
+  wg=4096  local=[128,1,1]  global=[32768,1,16]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=4 H=16 L=16384 D= 64  min=13511327  avg=13536737  max=13577293 us  GFLOPS=325.51
+  wg=16384  local=[128,1,1]  global=[32768,4,16]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=1 H= 4 L=16384 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+ocl-flash             B=4 H= 4 L=16384 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+ocl-flash             B=1 H= 8 L=16384 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+ocl-flash /home/aalim/Documents/github/qkv_t/bench_kernels/../contrib/MNN-simiyutin/source/backend/vulkan/buffer/compiler/.cache/shader/cache/../../../../execution/glsl/sdpa_flash_mnn.comp
+/home/aalim/Documents/github/qkv_t/bench_kernels/../contrib/MNN-simiyutin/source/backend/vulkan/buffer/compiler/.cache/shader/cache/../../../../execution/glsl/sdpa_flash_mnn.comp
+            B=4 H= 8 L=16384 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+ocl-flash             B=1 H=16 L=16384 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+ocl-flash             B=4 H=16 L=16384 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+ocl-flash             B=1 H= 4 L=32768 D= 64  min= 3419163  avg= 3428917  max= 3437980 us  GFLOPS=321.57
+  wg=2048  local=[128,1,1]  global=[65536,1,4]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=4 H= 4 L=32768 D= 64  min=13511919  avg=13556366  max=13674952 us  GFLOPS=325.49
+  wg=8192  local=[128,1,1]  global=[65536,4,4]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=1 H= 8 L=32768 D= 64  min= 6790647  avg= 6811202  max= 6831640 us  GFLOPS=323.83
+  wg=4096  local=[128,1,1]  global=[65536,1,8]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=4 H= 8 L=32768 D= 64  min=27019712  avg=27145828  max=27425162 us  GFLOPS=325.54
+  wg=16384  local=[128,1,1]  global=[65536,4,8]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=1 H=16 L=32768 D= 64  min=13529295  avg=13572848  max=13650187 us  GFLOPS=325.08
+  wg=8192  local=[128,1,1]  global=[65536,1,16]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=4 H=16 L=32768 D= 64  min=54029668  avg=54035496  max=54043888 us  GFLOPS=325.60
+  wg=32768  local=[128,1,1]  global=[65536,4,16]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+ocl-flash             B=1 H= 4 L=32768 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+ocl-flash             B=4 H= 4 L=32768 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+ocl-flash             B=1 H= 8 L=32768 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+ocl-flash             B=4 H= 8 L=32768 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+ocl-flash             B=1 H=16 L=32768 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+ocl-flash             B=4 H=16 L=32768 D=128  SKIP (shmem 49152 > limit 48896 bytes)
+
+=== Vulkan flash-attn ===
+[VK]  NVIDIA GeForce RTX 4060 Ti
+[VK]  cooperative_matrix: yes
+[VK] compiling D=64 BLOCK_M=64 TPR=2 shader...
+vk-flash              B=1 H= 4 L= 1024 D= 64  min=    1114  avg=    1115  max=    1119 us  GFLOPS=964.15
+  wg=64  local=[128,1,1]  dispatch=[16,4,1]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H= 4 L= 1024 D= 64  min=    4077  avg=    4174  max=    4477 us  GFLOPS=1053.54
+  wg=256  local=[128,1,1]  dispatch=[16,4,4]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=1 H= 8 L= 1024 D= 64  min=    2079  avg=    2091  max=    2215 us  GFLOPS=1032.95
+  wg=128  local=[128,1,1]  dispatch=[16,8,1]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H= 8 L= 1024 D= 64  min=    8026  avg=    8038  max=    8046 us  GFLOPS=1070.20
+  wg=512  local=[128,1,1]  dispatch=[16,8,4]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=1 H=16 L= 1024 D= 64  min=    4078  avg=    4083  max=    4091 us  GFLOPS=1053.29
+  wg=256  local=[128,1,1]  dispatch=[16,16,1]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H=16 L= 1024 D= 64  min=   15479  avg=   15752  max=   16192 us  GFLOPS=1109.86
+  wg=1024  local=[128,1,1]  dispatch=[16,16,4]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+[VK] compiling D=128 BLOCK_M=64 TPR=2 shader...
+vk-flash              B=1 H= 4 L= 1024 D=128  min=    2159  avg=    2179  max=    2294 us  GFLOPS=994.82
+  wg=64  local=[128,1,1]  dispatch=[16,4,1]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H= 4 L= 1024 D=128  min=    8366  avg=    8460  max=    8978 us  GFLOPS=1026.77
+  wg=256  local=[128,1,1]  dispatch=[16,4,4]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=1 H= 8 L= 1024 D=128  min=    4233  avg=    4238  max=    4246 us  GFLOPS=1014.53
+  wg=128  local=[128,1,1]  dispatch=[16,8,1]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H= 8 L= 1024 D=128  min=   16581  avg=   16764  max=   17115 us  GFLOPS=1036.09
+  wg=512  local=[128,1,1]  dispatch=[16,8,4]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=1 H=16 L= 1024 D=128  min=    8359  avg=    8555  max=    8931 us  GFLOPS=1027.61
+  wg=256  local=[128,1,1]  dispatch=[16,16,1]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H=16 L= 1024 D=128  min=   32011  avg=   32302  max=   33459 us  GFLOPS=1073.37
+  wg=1024  local=[128,1,1]  dispatch=[16,16,4]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=1 H= 4 L= 2048 D= 64  min=    4131  avg=    4174  max=    4275 us  GFLOPS=1039.65
+  wg=128  local=[128,1,1]  dispatch=[32,4,1]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H= 4 L= 2048 D= 64  min=   16319  avg=   16374  max=   16478 us  GFLOPS=1052.72
+  wg=512  local=[128,1,1]  dispatch=[32,4,4]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=1 H= 8 L= 2048 D= 64  min=    8110  avg=    8207  max=    8621 us  GFLOPS=1059.18
+  wg=256  local=[128,1,1]  dispatch=[32,8,1]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H= 8 L= 2048 D= 64  min=   30807  avg=   30819  max=   30838 us  GFLOPS=1115.32
+  wg=1024  local=[128,1,1]  dispatch=[32,8,4]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=1 H=16 L= 2048 D= 64  min=   15967  avg=   15984  max=   16002 us  GFLOPS=1075.95
+  wg=512  local=[128,1,1]  dispatch=[32,16,1]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H=16 L= 2048 D= 64  min=   60459  avg=   60476  max=   60499 us  GFLOPS=1136.63
+  wg=2048  local=[128,1,1]  dispatch=[32,16,4]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=1 H= 4 L= 2048 D=128  min=    8419  avg=    8423  max=    8429 us  GFLOPS=1020.26
+  wg=128  local=[128,1,1]  dispatch=[32,4,1]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H= 4 L= 2048 D=128  min=   32915  avg=   32958  max=   32995 us  GFLOPS=1043.88
+  wg=512  local=[128,1,1]  dispatch=[32,4,4]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=1 H= 8 L= 2048 D=128  min=   16600  avg=   16610  max=   16626 us  GFLOPS=1034.92
+  wg=256  local=[128,1,1]  dispatch=[32,8,1]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H= 8 L= 2048 D=128  min=   63546  avg=   63577  max=   63629 us  GFLOPS=1081.41
+  wg=1024  local=[128,1,1]  dispatch=[32,8,4]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=1 H=16 L= 2048 D=128  min=   32910  avg=   32962  max=   33012 us  GFLOPS=1044.05
+  wg=512  local=[128,1,1]  dispatch=[32,16,1]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H=16 L= 2048 D=128  min=  124844  avg=  124949  max=  125587 us  GFLOPS=1100.88
+  wg=2048  local=[128,1,1]  dispatch=[32,16,4]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=1 H= 4 L= 4096 D= 64  min=   16160  avg=   16188  max=   16210 us  GFLOPS=1063.12
+  wg=256  local=[128,1,1]  dispatch=[64,4,1]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H= 4 L= 4096 D= 64  min=   61531  avg=   61557  max=   61572 us  GFLOPS=1116.82
+  wg=1024  local=[128,1,1]  dispatch=[64,4,4]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=1 H= 8 L= 4096 D= 64  min=   31898  avg=   31922  max=   31945 us  GFLOPS=1077.17
+  wg=512  local=[128,1,1]  dispatch=[64,8,1]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H= 8 L= 4096 D= 64  min=  120757  avg=  120783  max=  120807 us  GFLOPS=1138.15
+  wg=2048  local=[128,1,1]  dispatch=[64,8,4]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=1 H=16 L= 4096 D= 64  min=   61549  avg=   61570  max=   61592 us  GFLOPS=1116.50
+  wg=1024  local=[128,1,1]  dispatch=[64,16,1]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H=16 L= 4096 D= 64  min=  239292  avg=  239362  max=  240189 us  GFLOPS=1148.71
+  wg=4096  local=[128,1,1]  dispatch=[64,16,4]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=1 H= 4 L= 4096 D=128  min=   33106  avg=   33113  max=   33124 us  GFLOPS=1037.86
+  wg=256  local=[128,1,1]  dispatch=[64,4,1]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H= 4 L= 4096 D=128  min=  126645  avg=  126678  max=  126714 us  GFLOPS=1085.23
+  wg=1024  local=[128,1,1]  dispatch=[64,4,4]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=1 H= 8 L= 4096 D=128  min=   65642  avg=   68042  max=   70078 us  GFLOPS=1046.89
+  wg=512  local=[128,1,1]  dispatch=[64,8,1]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H= 8 L= 4096 D=128  min=  248771  avg=  248832  max=  248868 us  GFLOPS=1104.94
+  wg=2048  local=[128,1,1]  dispatch=[64,8,4]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=1 H=16 L= 4096 D=128  min=  126673  avg=  126856  max=  128614 us  GFLOPS=1084.99
+  wg=1024  local=[128,1,1]  dispatch=[64,16,1]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H=16 L= 4096 D=128  min=  493533  avg=  493742  max=  494552 us  GFLOPS=1113.92
+  wg=4096  local=[128,1,1]  dispatch=[64,16,4]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=1 H= 4 L= 8192 D= 64  min=   63772  avg=   63948  max=   66081 us  GFLOPS=1077.59
+  wg=512  local=[128,1,1]  dispatch=[128,4,1]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H= 4 L= 8192 D= 64  min=  241351  avg=  241585  max=  243509 us  GFLOPS=1138.91
+  wg=2048  local=[128,1,1]  dispatch=[128,4,4]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=1 H= 8 L= 8192 D= 64  min=  122990  avg=  123010  max=  123029 us  GFLOPS=1117.48
+  wg=1024  local=[128,1,1]  dispatch=[128,8,1]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H= 8 L= 8192 D= 64  min=  478087  avg=  478272  max=  480239 us  GFLOPS=1149.91
+  wg=4096  local=[128,1,1]  dispatch=[128,8,4]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=1 H=16 L= 8192 D= 64  min=  241342  avg=  241441  max=  242544 us  GFLOPS=1138.95
+  wg=2048  local=[128,1,1]  dispatch=[128,16,1]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H=16 L= 8192 D= 64  min=  953281  avg=  953539  max=  954936 us  GFLOPS=1153.40
+  wg=8192  local=[128,1,1]  dispatch=[128,16,4]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=1 H= 4 L= 8192 D=128  min=  130976  avg=  131064  max=  131802 us  GFLOPS=1049.34
+  wg=512  local=[128,1,1]  dispatch=[128,4,1]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H= 4 L= 8192 D=128  min=  496431  avg=  496601  max=  498458 us  GFLOPS=1107.42
+  wg=2048  local=[128,1,1]  dispatch=[128,4,4]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=1 H= 8 L= 8192 D=128  min=  252763  avg=  252989  max=  255282 us  GFLOPS=1087.49
+  wg=1024  local=[128,1,1]  dispatch=[128,8,1]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H= 8 L= 8192 D=128  min=  984806  avg=  985271  max=  987203 us  GFLOPS=1116.47
+  wg=4096  local=[128,1,1]  dispatch=[128,8,4]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=1 H=16 L= 8192 D=128  min=  496584  avg=  497411  max=  505535 us  GFLOPS=1107.07
+  wg=2048  local=[128,1,1]  dispatch=[128,16,1]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H=16 L= 8192 D=128  min= 1965077  avg= 1966082  max= 1971259 us  GFLOPS=1119.05
+  wg=8192  local=[128,1,1]  dispatch=[128,16,4]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=1 H= 4 L=16384 D= 64  min=  245812  avg=  245993  max=  248036 us  GFLOPS=1118.24
+  wg=1024  local=[128,1,1]  dispatch=[256,4,1]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H= 4 L=16384 D= 64  min=  955645  avg=  956099  max=  959268 us  GFLOPS=1150.54
+  wg=4096  local=[128,1,1]  dispatch=[256,4,4]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=1 H= 8 L=16384 D= 64  min=  482389  avg=  482560  max=  484530 us  GFLOPS=1139.65
+  wg=2048  local=[128,1,1]  dispatch=[256,8,1]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H= 8 L=16384 D= 64  min= 1904920  avg= 1906972  max= 1921498 us  GFLOPS=1154.39
+  wg=8192  local=[128,1,1]  dispatch=[256,8,4]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=1 H=16/home/aalim/Documents/github/qkv_t/bench_kernels/../contrib/MNN-simiyutin/source/backend/vulkan/buffer/compiler/.cache/shader/cache/../../../../execution/glsl/sdpa_flash_coopmat_mnn.comp
+ L=16384 D= 64  min=  955694  avg=  956087  max=  958976 us  GFLOPS=1150.49
+  wg=4096  local=[128,1,1]  dispatch=[256,16,1]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H=16 L=16384 D= 64  min= 3806533  avg= 3810186  max= 3815629 us  GFLOPS=1155.39
+  wg=16384  local=[128,1,1]  dispatch=[256,16,4]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=1 H= 4 L=16384 D=128  min=  505293  avg=  505637  max=  509844 us  GFLOPS=1087.99
+  wg=1024  local=[128,1,1]  dispatch=[256,4,1]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H= 4 L=16384 D=128  min= 1967827  avg= 1972108  max= 1986155 us  GFLOPS=1117.49
+  wg=4096  local=[128,1,1]  dispatch=[256,4,4]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=1 H= 8 L=16384 D=128  min=  992510  avg=  993275  max=  997981 us  GFLOPS=1107.81
+  wg=2048  local=[128,1,1]  dispatch=[256,8,1]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H= 8 L=16384 D=128  min= 3926940  avg= 3931644  max= 3940729 us  GFLOPS=1119.97
+  wg=8192  local=[128,1,1]  dispatch=[256,8,4]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=1 H=16 L=16384 D=128  min= 1968320  avg= 1971290  max= 1985472 us  GFLOPS=1117.21
+  wg=4096  local=[128,1,1]  dispatch=[256,16,1]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H=16 L=16384 D=128  min= 7888502  avg= 7970216  max= 8210374 us  GFLOPS=1115.05
+  wg=16384  local=[128,1,1]  dispatch=[256,16,4]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=1 H= 4 L=32768 D= 64  min=  974967  avg=  980893  max=  994658 us  GFLOPS=1127.74
+  wg=2048  local=[128,1,1]  dispatch=[512,4,1]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H= 4 L=32768 D= 64  min= 3876103  avg= 3938906  max= 3998996 us  GFLOPS=1134.66
+  wg=8192  local=[128,1,1]  dispatch=[512,4,4]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=1 H= 8 L=32768 D= 64  min= 1950382  avg= 1963193  max= 2007143 us  GFLOPS=1127.48
+  wg=4096  local=[128,1,1]  dispatch=[512,8,1]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H= 8 L=32768 D= 64  min= 7775474  avg= 7797500  max= 7816692 us  GFLOPS=1131.26
+  wg=16384  local=[128,1,1]  dispatch=[512,8,4]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=1 H=16 L=32768 D= 64  min= 3886991  avg= 3901332  max= 3937706 us  GFLOPS=1131.48
+  wg=8192  local=[128,1,1]  dispatch=[512,16,1]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H=16 L=32768 D= 64  min=15233318  avg=15305311  max=15734319 us  GFLOPS=1154.85
+  wg=32768  local=[128,1,1]  dispatch=[512,16,4]  shmem=24576B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=1 H= 4 L=32768 D=128  min= 2017959  avg= 2018946  max= 2021234 us  GFLOPS=1089.73
+  wg=2048  local=[128,1,1]  dispatch=[512,4,1]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H= 4 L=32768 D=128  min= 7955808  avg= 7960958  max= 7972700 us  GFLOPS=1105.62
+  wg=8192  local=[128,1,1]  dispatch=[512,4,4]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=1 H= 8 L=32768 D=128  min= 4029120  avg= 4031406  max= 4041516 us  GFLOPS=1091.57
+  wg=4096  local=[128,1,1]  dispatch=[512,8,1]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H= 8 L=32768 D=128  min=15961216  avg=15978338  max=16057219 us  GFLOPS=1102.18
+  wg=16384  local=[128,1,1]  dispatch=[512,8,4]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=1 H=16 L=32768 D=128  min= 7975154  avg= 7979872  max= 7997146 us  GFLOPS=1102.94
+  wg=8192  local=[128,1,1]  dispatch=[512,16,1]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+vk-flash              B=4 H=16 L=32768 D=128  min=31806118  avg=31824634  max=31949552 us  GFLOPS=1106.21
+  wg=32768  local=[128,1,1]  dispatch=[512,16,4]  shmem=49152B  BLOCK_M=64 BLOCK_N=32 TPR=2
+
+=== Vulkan coopmat flash-attn ===
+[VK] compiling coopmat D=64 shader...
+vk-coopmat            B=1 H= 4 L= 1024 D= 64  min=     128  avg=     128  max=     129 us  GFLOPS=8394.90
+  wg=128  loc/home/aalim/Documents/github/qkv_t/bench_kernels/../contrib/MNN-simiyutin/source/backend/vulkan/buffer/compiler/.cache/shader/cache/../../../../execution/glsl/sdpa_flash_coopmat_mnn.comp
+al=[32,1,1]  dispatch=[32,4,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H= 4 L= 1024 D= 64  min=     490  avg=     491  max=     495 us  GFLOPS=8764.38
+  wg=512  local=[32,1,1]  dispatch=[32,4,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=1 H= 8 L= 1024 D= 64  min=     253  avg=     254  max=     255 us  GFLOPS=8496.94
+  wg=256  local=[32,1,1]  dispatch=[32,8,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H= 8 L= 1024 D= 64  min=    1097  avg=    1104  max=    1118 us  GFLOPS=7833.19
+  wg=1024  local=[32,1,1]  dispatch=[32,8,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=1 H=16 L= 1024 D= 64  min=     491  avg=     494  max=     508 us  GFLOPS=8748.96
+  wg=512  local=[32,1,1]  dispatch=[32,16,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H=16 L= 1024 D= 64  min=    2701  avg=    2767  max=    2967 us  GFLOPS=6361.03
+  wg=2048  local=[32,1,1]  dispatch=[32,16,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+[VK] compiling coopmat D=128 shader...
+vk-coopmat            B=1 H= 4 L= 1024 D=128  min=     437  avg=     437  max=     438 us  GFLOPS=4916.40
+  wg=128  local=[32,1,1]  dispatch=[32,4,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H= 4 L= 1024 D=128  min=    1853  avg=    1866  max=    1887 us  GFLOPS=4635.39
+  wg=512  local=[32,1,1]  dispatch=[32,4,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=1 H= 8 L= 1024 D=128  min=     861  avg=     862  max=     866 us  GFLOPS=4989.88
+  wg=256  local=[32,1,1]  dispatch=[32,8,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H= 8 L= 1024 D=128  min=    4307  avg=    4341  max=    4375 us  GFLOPS=3988.91
+  wg=1024  local=[32,1,1]  dispatch=[32,8,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=1 H=16 L= 1024 D=128  min=    1893  avg=    1902  max=    1911 us  GFLOPS=4537.53
+  wg=512  local=[32,1,1]  dispatch=[32,16,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H=16 L= 1024 D=128  min=    8215  avg=    8257  max=    8316 us  GFLOPS=4182.80
+  wg=2048  local=[32,1,1]  dispatch=[32,16,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=1 H= 4 L= 2048 D= 64  min=     471  avg=     473  max=     474 us  GFLOPS=9109.39
+  wg=256  local=[32,1,1]  dispatch=[64,4,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H= 4 L= 2048 D= 64  min=    1993  avg=    2002  max=    2014 us  GFLOPS=8621.80
+  wg=1024  local=[32,1,1]  dispatch=[64,4,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=1 H= 8 L= 2048 D= 64  min=     934  avg=     937  max=     964 us  GFLOPS=9195.20
+  wg=512  local=[32,1,1]  dispatch=[64,8,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H= 8 L= 2048 D= 64  min=    4449  avg=    4580  max=    4871 us  GFLOPS=7723.15
+  wg=2048  local=[32,1,1]  dispatch=[64,8,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=1 H=16 L= 2048 D= 64  min=    2011  avg=    2083  max=    2429 us  GFLOPS=8541.15
+  wg=1024  local=[32,1,1]  dispatch=[64,16,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H=16 L= 2048 D= 64  min=    8780  avg=    9020  max=    9236 us  GFLOPS=7826.90
+  wg=4096  local=[32,1,1]  dispatch=[64,16,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=1 H= 4 L= 2048 D=128  min=    1668  avg=    1681  max=    1857 us  GFLOPS=5150.04
+  wg=256  local=[32,1,1]  dispatch=[64,4,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H= 4 L= 2048 D=128  min=    6940  avg=    7146  max=    7483 us  GFLOPS=4951.27
+  wg=1024  local=[32,1,1]  dispatch=[64,4,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=1 H= 8 L= 2048 D=128  min=    3512  avg=    3620  max=    4018 us  GFLOPS=4892.34
+  wg=512  local=[32,1,1]  dispatch=[64,8,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H= 8 L= 2048 D=128  min=   13519  avg=   13550  max=   13565 us  GFLOPS=5083.05
+  wg=2048  local=[32,1,1]  dispatch=[64,8,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=1 H=16 L= 2048 D=128  min=    6883  avg=    7100  max=    7869 us  GFLOPS=4992.06
+  wg=1024  local=[32,1,1]  dispatch=[64,16,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H=16 L= 2048 D=128  min=   26438  avg=   27068  max=   27596 us  GFLOPS=5198.47
+  wg=4096  local=[32,1,1]  dispatch=[64,16,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=1 H= 4 L= 4096 D= 64  min=    1819  avg=    1834  max=    2006 us  GFLOPS=9445.63
+  wg=512  local=[32,1,1]  dispatch=[128,4,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H= 4 L= 4096 D= 64  min=    7465  avg=    7695  max=    8042 us  GFLOPS=9205.57
+  wg=2048  local=[32,1,1]  dispatch=[128,4,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=1 H= 8 L= 4096 D= 64  min=    3795  avg=    3894  max=    4157 us  GFLOPS=9053.17
+  wg=1024  local=[32,1,1]  dispatch=[128,8,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H= 8 L= 4096 D= 64  min=   14570  avg=   14732  max=   15166 us  GFLOPS=9432.88
+  wg=4096  local=[32,1,1]  dispatch=[128,8,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=1 H=16 L= 4096 D= 64  min=    7499  avg=    7510  max=    7525 us  GFLOPS=9163.22
+  wg=2048  local=[32,1,1]  dispatch=[128,16,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H=16 L= 4096 D= 64  min=   28788  avg=   28812  max=   28839 us  GFLOPS=9548.29
+  wg=8192  local=[32,1,1]  dispatch=[128,16,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=1 H= 4 L= 4096 D=128  min=    6574  avg=    6591  max=    6619 us  GFLOPS=5226.78
+  wg=512  local=[32,1,1]  dispatch=[128,4,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H= 4 L= 4096 D=128  min=   26478  avg=   26548  max=   26596 us  GFLOPS=5190.75
+  wg=2048  local=[32,1,1]  dispatch=[128,4,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=1 H= 8 L= 4096 D=128  min=   13695  avg=   13723  max=   13777 us  GFLOPS=5017.84
+  wg=1024  local=[32,1,1]  dispatch=[128,8,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H= 8 L= 4096 D=128  min=   52455  avg=   52601  max=   52641 us  GFLOPS=5240.26
+  wg=4096  local=[32,1,1]  dispatch=[128,8,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=1 H=16 L= 4096 D=128  min=   26381  avg=   26465  max=   26489 us  GFLOPS=5209.86
+  wg=2048  local=[32,1,1]  dispatch=[128,16,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H=16 L= 4096 D=128  min=  103192  avg=  103545  max=  103708 us  GFLOPS=5327.51
+  wg=8192  local=[32,1,1]  dispatch=[128,16,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=1 H= 4 L= 8192 D= 64  min=    7213  avg=    7220  max=    7235 us  GFLOPS=9527.77
+  wg=1024  local=[32,1,1]  dispatch=[256,4,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H= 4 L= 8192 D= 64  min=   28754  avg=   28795  max=   28842 us  GFLOPS=9559.58
+  wg=4096  local=[32,1,1]  dispatch=[256,4,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=1 H= 8 L= 8192 D= 64  min=   14812  avg=   14848  max=   14877 us  GFLOPS=9279.17
+  wg=2048  local=[32,1,1]  dispatch=[256,8,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H= 8 L= 8192 D= 64  min=   56899  avg=   56964  max=   57050 us  GFLOPS=9661.93
+  wg=8192  local=[32,1,1]  dispatch=[256,8,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=1 H=16 L= 8192 D= 64  min=   28852  avg=   28903  max=   28983 us  GFLOPS=9527.17
+  wg=4096  local=[32,1,1]  dispatch=[256,16,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H=16 L= 8192 D= 64  min=  112999  avg=  113139  max=  113430 us  GFLOPS=9730.24
+  wg=16384  local=[32,1,1]  dispatch=[256,16,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=1 H= 4 L= 8192 D=128  min=   27069  avg=   27074  max=   27079 us  GFLOPS=5077.29
+  wg=1024  local=[32,1,1]  dispatch=[256,4,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H= 4 L= 8192 D=128  min=  103666  avg=  106094  max=  110995 us  GFLOPS=5303.16
+  wg=4096  local=[32,1,1]  dispatch=[256,4,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=1 H= 8 L= 8192 D=128  min=   52803  avg=   52816  max=   52912 us  GFLOPS=5205.70
+  wg=2048  local=[32,1,1]  dispatch=[256,8,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H= 8 L= 8192 D=128  min=  206806  avg=  206902  max=  207301 us  GFLOPS=5316.64
+  wg=8192  local=[32,1,1]  dispatch=[256,8,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=1 H=16 L= 8192 D=128  min=  103298  avg=  103320  max=  103337 us  GFLOPS=5322.03
+  wg=4096  local=[32,1,1]  dispatch=[256,16,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H=16 L= 8192 D=128  min=  408855  avg=  408974  max=  409491 us  GFLOPS=5378.49
+  wg=16384  local=[32,1,1]  dispatch=[256,16,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=1 H= 4 L=16384 D= 64  min=   29348  avg=   29360  max=   29389 us  GFLOPS=9366.15
+  wg=2048  local=[32,1,1]  dispatch=[512,4,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H= 4 L=16384 D= 64  min=  112602  avg=  113058  max=  113465 us  GFLOPS=9764.55
+  wg=8192  local=[32,1,1]  dispatch=[512,4,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=1 H= 8 L=16384 D= 64  min=   57479  avg=   57671  max=   59119 us  GFLOPS=9564.48
+  wg=4096  local=[32,1,1]  dispatch=[512,8,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H= 8 L=16384 D= 64  min=  225155  avg=  225500  max=  225768 us  GFLOPS=9766.71
+  wg=16384  local=[32,1,1]  dispatch=[512,8,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=1 H=16 L=16384 D= 64  min=  113725  avg=  113831  max=  113897 us  GFLOPS=9668.13
+  wg=8192  local=[32,1,1]  dispatch=[512,16,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H=16 L=16384 D= 64  min=  449460  avg=  450159  max=  452848 us  GFLOPS=9785.19
+  wg=32768  local=[32,1,1]  dispatch=[512,16,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=1 H= 4 L=16384 D=128  min=  104416  avg=  104562  max=  104579 us  GFLOPS=5265.06
+  wg=2048  local=[32,1,1]  dispatch=[512,4,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H= 4 L=16384 D=128  min=  409149  avg=  409362  max=  411985 us  GFLOPS=5374.63
+  wg=8192  local=[32,1,1]  dispatch=[512,4,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=1 H= 8 L=16384 D=128  min=  207087  avg=  207130  max=  207533 us  GFLOPS=5309.41
+  wg=4096  local=[32,1,1]  dispatch=[512,8,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H= 8 L=16384 D=128  min=  819070  avg=  819486  max=  821925 us  GFLOPS=5369.56
+  wg=16384  local=[32,1,1]  dispatch=[512,8,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=1 H=16 L=16384 D=128  min=  408063  avg=  408326  max=  411336 us  GFLOPS=5388.93
+  wg=8192  local=[32,1,1]  dispatch=[512,16,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H=16 L=16384 D=128  min= 1621645  avg= 1622096  max= 1622886 us  GFLOPS=5424.18
+  wg=32768  local=[32,1,1]  dispatch=[512,16,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=1 H= 4 L=32768 D= 64  min=  113825  avg=  113950  max=  114037 us  GFLOPS=9659.68
+  wg=4096  local=[32,1,1]  dispatch=[1024,4,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H= 4 L=32768 D= 64  min=  445413  avg=  446751  max=  448485 us  GFLOPS=9874.09
+  wg=16384  local=[32,1,1]  dispatch=[1024,4,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=1 H= 8 L=32768 D= 64  min=  225817  avg=  226214  max=  226315 us  GFLOPS=9738.06
+  wg=8192  local=[32,1,1]  dispatch=[1024,8,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H= 8 L=32768 D= 64  min=  891319  avg=  894114  max=  895342 us  GFLOPS=9868.62
+  wg=32768  local=[32,1,1]  dispatch=[1024,8,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=1 H=16 L=32768 D= 64  min=  447853  avg=  448878  max=  450171 us  GFLOPS=9820.29
+  wg=16384  local=[32,1,1]  dispatch=[1024,16,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H=16 L=32768 D= 64  min= 1779896  avg= 1782380  max= 1788523 us  GFLOPS=9883.83
+  wg=65536  local=[32,1,1]  dispatch=[1024,16,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=1 H= 4 L=32768 D=128  min=  606768  avg=  607435  max=  607821 us  GFLOPS=3624.16
+  wg=4096  local=[32,1,1]  dispatch=[1024,4,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H= 4 L=32768 D=128  min= 2416721  avg= 2419022  max= 2425595 us  GFLOPS=3639.68
+  wg=16384  local=[32,1,1]  dispatch=[1024,4,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=1 H= 8 L=32768 D=128  min= 1177218  avg= 1178350  max= 1179557 us  GFLOPS=3735.97
+  wg=8192  local=[32,1,1]  dispatch=[1024,8,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H= 8 L=32768 D=128  min= 4969268  avg= 5054568  max= 5356254 us  GFLOPS=3540.20
+  wg=32768  local=[32,1,1]  dispatch=[1024,8,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=1 H=16 L=32768 D=128  min= 2372452  avg= 2393738  max= 2559244 us  GFLOPS=3707.60
+  wg=16384  local=[32,1,1]  dispatch=[1024,16,1]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)
+vk-coopmat            B=4 H=16 L=32768 D=128  min= 9350097  avg= 9364197  max= 9398149 us  GFLOPS=3763.00
+  wg=65536  local=[32,1,1]  dispatch=[1024,16,4]  BLOCK_M=32 (coopmat Br=Bc=32 lM=lN=lK=16)

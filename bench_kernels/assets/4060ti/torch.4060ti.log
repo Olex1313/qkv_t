@@ -1,0 +1,74 @@
+[torch] NVIDIA GeForce RTX 4060 Ti
+[torch] torch=2.12.0+cu130  cuda=13.0
+torch-efficient       B=1 H= 4 L= 1024 D= 64  min=     230  avg=     266  max=     418 us  GFLOPS=4678.12
+torch-efficient       B=4 H= 4 L= 1024 D= 64  min=     822  avg=     886  max=    1049 us  GFLOPS=5225.32
+torch-efficient       B=1 H= 8 L= 1024 D= 64  min=     430  avg=     431  max=     434 us  GFLOPS=4997.75
+torch-efficient       B=4 H= 8 L= 1024 D= 64  min=    1591  avg=    1616  max=    1814 us  GFLOPS=5399.66
+torch-efficient       B=1 H=16 L= 1024 D= 64  min=     820  avg=     823  max=     828 us  GFLOPS=5239.79
+torch-efficient       B=4 H=16 L= 1024 D= 64  min=    3064  avg=    3520  max=    3976 us  GFLOPS=5606.39
+torch-efficient       B=1 H= 4 L= 1024 D=128  min=     386  avg=     427  max=     662 us  GFLOPS=5569.88
+torch-efficient       B=4 H= 4 L= 1024 D=128  min=    1496  avg=    1595  max=    1763 us  GFLOPS=5741.26
+torch-efficient       B=1 H= 8 L= 1024 D=128  min=     877  avg=     916  max=    1112 us  GFLOPS=4896.45
+torch-efficient       B=4 H= 8 L= 1024 D=128  min=    2699  avg=    2888  max=    3356 us  GFLOPS=6365.67
+torch-efficient       B=1 H=16 L= 1024 D=128  min=    1357  avg=    1411  max=    1501 us  GFLOPS=6329.22
+torch-efficient       B=4 H=16 L= 1024 D=128  min=    5206  avg=    5363  max=    5789 us  GFLOPS=6599.83
+torch-efficient       B=1 H= 4 L= 2048 D= 64  min=     764  avg=     768  max=     772 us  GFLOPS=5619.65
+torch-efficient       B=4 H= 4 L= 2048 D= 64  min=    2890  avg=    2926  max=    3226 us  GFLOPS=5945.25
+torch-efficient       B=1 H= 8 L= 2048 D= 64  min=    1481  avg=    1486  max=    1493 us  GFLOPS=5801.16
+torch-efficient       B=4 H= 8 L= 2048 D= 64  min=    5558  avg=    5631  max=    5978 us  GFLOPS=6182.02
+torch-efficient       B=1 H=16 L= 2048 D= 64  min=    2887  avg=    2893  max=    2902 us  GFLOPS=5950.34
+torch-efficient       B=4 H=16 L= 2048 D= 64  min=   10890  avg=   10932  max=   11062 us  GFLOPS=6310.25
+torch-efficient       B=1 H= 4 L= 2048 D=128  min=    1352  avg=    1356  max=    1362 us  GFLOPS=6352.11
+torch-efficient       B=4 H= 4 L= 2048 D=128  min=    5347  avg=    5371  max=    5535 us  GFLOPS=6426.14
+torch-efficient       B=1 H= 8 L= 2048 D=128  min=    2685  avg=    2711  max=    2905 us  GFLOPS=6397.45
+torch-efficient       B=4 H= 8 L= 2048 D=128  min=   10351  avg=   10356  max=   10359 us  GFLOPS=6638.88
+torch-efficient       B=1 H=16 L= 2048 D=128  min=    5343  avg=    5349  max=    5354 us  GFLOPS=6430.39
+torch-efficient       B=4 H=16 L= 2048 D=128  min=   20362  avg=   20730  max=   22341 us  GFLOPS=6749.66
+torch-efficient       B=1 H= 4 L= 4096 D= 64  min=    2942  avg=    3133  max=    3550 us  GFLOPS=5839.09
+torch-efficient       B=4 H= 4 L= 4096 D= 64  min=   11078  avg=   11174  max=   11311 us  GFLOPS=6203.42
+torch-efficient       B=1 H= 8 L= 4096 D= 64  min=    5744  avg=    5757  max=    5765 us  GFLOPS=5981.73
+torch-efficient       B=4 H= 8 L= 4096 D= 64  min=   21739  avg=   21863  max=   22359 us  GFLOPS=6322.17
+torch-efficient       B=1 H=16 L= 4096 D= 64  min=   11120  avg=   11132  max=   11142 us  GFLOPS=6179.66
+torch-efficient       B=4 H=16 L= 4096 D= 64  min=   43276  avg=   43357  max=   43802 us  GFLOPS=6351.67
+torch-efficient       B=1 H= 4 L= 4096 D=128  min=    5368  avg=    5370  max=    5373 us  GFLOPS=6401.21
+torch-efficient       B=4 H= 4 L= 4096 D=128  min=   20732  avg=   20793  max=   21224 us  GFLOPS=6629.21
+torch-efficient       B=1 H= 8 L= 4096 D=128  min=   10710  avg=   10714  max=   10716 us  GFLOPS=6416.15
+torch-efficient       B=4 H= 8 L= 4096 D=128  min=   40809  avg=   40871  max=   41300 us  GFLOPS=6735.75
+torch-efficient       B=1 H=16 L= 4096 D=128  min=   20742  avg=   20789  max=   20983 us  GFLOPS=6625.99
+torch-efficient       B=4 H=16 L= 4096 D=128  min=   80979  avg=   81095  max=   81519 us  GFLOPS=6788.89
+torch-efficient       B=1 H= 4 L= 8192 D= 64  min=   11509  avg=   11526  max=   11544 us  GFLOPS=5970.70
+torch-efficient       B=4 H= 4 L= 8192 D= 64  min=   43589  avg=   43654  max=   44088 us  GFLOPS=6306.08
+torch-efficient       B=1 H= 8 L= 8192 D= 64  min=   22198  avg=   22293  max=   22687 us  GFLOPS=6191.42
+torch-efficient       B=4 H= 8 L= 8192 D= 64  min=   86477  avg=   86583  max=   86945 us  GFLOPS=6357.23
+torch-efficient       B=1 H=16 L= 8192 D= 64  min=   43583  avg=   43650  max=   44069 us  GFLOPS=6307.05
+torch-efficient       B=4 H=16 L= 8192 D= 64  min=  172368  avg=  172598  max=  172885 us  GFLOPS=6378.86
+torch-efficient       B=1 H= 4 L= 8192 D=128  min=   21379  avg=   21392  max=   21398 us  GFLOPS=6428.78
+torch-efficient       B=4 H= 4 L= 8192 D=128  min=   81494  avg=   81584  max=   82009 us  GFLOPS=6745.99
+torch-efficient       B=1 H= 8 L= 8192 D=128  min=   41421  avg=   41590  max=   42471 us  GFLOPS=6636.24
+torch-efficient       B=4 H= 8 L= 8192 D=128  min=  161744  avg=  162120  max=  163234 us  GFLOPS=6797.84
+torch-efficient       B=1 H=16 L= 8192 D=128  min=   81519  avg=   82397  max=   85719 us  GFLOPS=6743.88
+torch-efficient       B=4 H=16 L= 8192 D=128  min=  323002  avg=  329034  max=  341359 us  GFLOPS=6808.07
+torch-efficient       B=1 H= 4 L=16384 D= 64  min=   44361  avg=   44600  max=   45378 us  GFLOPS=6196.40
+torch-efficient       B=4 H= 4 L=16384 D= 64  min=  172945  avg=  178286  max=  181413 us  GFLOPS=6357.60
+torch-efficient       B=1 H= 8 L=16384 D= 64  min=   87260  avg=   90344  max=   93458 us  GFLOPS=6300.18
+torch-efficient       B=4 H= 8 L=16384 D= 64  min=  345676  avg=  346474  max=  346975 us  GFLOPS=6361.51
+torch-efficient       B=1 H=16 L=16384 D= 64  min=  173091  avg=  173693  max=  174111 us  GFLOPS=6352.20
+torch-efficient       B=4 H=16 L=16384 D= 64  min=  691786  avg=  692721  max=  693690 us  GFLOPS=6357.52
+torch-efficient       B=1 H= 4 L=16384 D=128  min=   82807  avg=   82893  max=   83334 us  GFLOPS=6639.01
+torch-efficient       B=4 H= 4 L=16384 D=128  min=  323384  avg=  323542  max=  323928 us  GFLOPS=6800.05
+torch-efficient       B=1 H= 8 L=16384 D=128  min=  162953  avg=  163067  max=  163546 us  GFLOPS=6747.42
+torch-efficient       B=4 H= 8 L=16384 D=128  min=  644924  avg=  645149  max=  645567 us  GFLOPS=6819.48
+torch-efficient       B=1 H=16 L=16384 D=128  min=  323421  avg=  323593  max=  323992 us  GFLOPS=6799.26
+torch-efficient       B=4 H=16 L=16384 D=128  min= 1288131  avg= 1288424  max= 1288790 us  GFLOPS=6828.57
+torch-efficient       B=1 H= 4 L=32768 D= 64  min=  174103  avg=  174195  max=  174584 us  GFLOPS=6315.30
+torch-efficient       B=4 H= 4 L=32768 D= 64  min=  691946  avg=  692273  max=  692750 us  GFLOPS=6356.06
+torch-efficient       B=1 H= 8 L=32768 D= 64  min=  347003  avg=  347198  max=  347659 us  GFLOPS=6337.19
+torch-efficient       B=4 H= 8 L=32768 D= 64  min= 1385464  avg= 1386373  max= 1387841 us  GFLOPS=6348.84
+torch-efficient       B=1 H=16 L=32768 D= 64  min=  692377  avg=  694053  max=  695227 us  GFLOPS=6352.10
+torch-efficient       B=4 H=16 L=32768 D= 64  min= 2772892  avg= 2775769  max= 2779028 us  GFLOPS=6344.35
+torch-efficient       B=1 H= 4 L=32768 D=128  min=  328306  avg=  328544  max=  329008 us  GFLOPS=6698.10
+torch-efficient       B=4 H= 4 L=32768 D=128  min= 1297401  avg= 1298089  max= 1298664 us  GFLOPS=6779.78
+torch-efficient       B=1 H= 8 L=32768 D=128  min=  651505  avg=  651834  max=  652280 us  GFLOPS=6750.60
+torch-efficient       B=4 H= 8 L=32768 D=128  min= 2595742  avg= 2604363  max= 2667787 us  GFLOPS=6777.32
+torch-efficient       B=1 H=16 L=32768 D=128  min= 1297880  avg= 1313659  max= 1342584 us  GFLOPS=6777.28
+torch-efficient       B=4 H=16 L=32768 D=128  min= 5188511  avg= 5189277  max= 5190072 us  GFLOPS=6781.21

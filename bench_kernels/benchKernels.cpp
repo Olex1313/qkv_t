@@ -690,7 +690,9 @@ int main(int argc, const char* argv[]) {
     std::vector<BenchCase> cases;
     for (int seq : {1024, 2048, 4096, 8192, 16384, 32768})
         for (int d : {64, 128})
-            cases.push_back({1, 4, seq, d});
+            for (int h : {4, 8, 16})
+                for (int b : {1, 4})
+            cases.push_back({b, h, seq, d});
 
 #ifdef BENCH_OCL
     printf("\n=== OCL flash-attn ===\n");
